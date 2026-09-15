@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heirs of Promise Schools</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="left">
+        <div class="hamburger" id="menuIcon" onclick="toggleMenu()">☰</div>
+        <a href="index.html" class="logo">Heirs of Promise Schools</a>
+    </div>
+    <div class="center">
+        <input type="text" placeholder="Search news, academics, portals...">
+        <button type="submit">🔍</button>
+    </div>
+    <div class="right">
+        <div class="signup" onclick="window.location.href='apply.html'">Apply Now</div>
+    </div>
+</header>
+
+<nav id="sideMenu" class="side-menu">
+    <ul>
+        <li><a href="index.html">🏠 Home</a></li>
+        <li><a href="academics.html">🎓 Academics</a></li>
+        <li><a href="admissions.html">📋 Admissions</a></li>
+        <li><a href="subscriptions.html">💳 Tuition & Fees</a></li>
+        <li><a href="library.html">📚 Library</a></li>
+        <li><a href="about.html">🏫 About Us</a></li>
+        <li><a href="contact.html">📞 Contact Us</a></li>
+        <li><a href="portal.html" class="portal-btn">🔒 Role-Based Portals</a></li>
+    </ul>
+</nav>
+
+<div id="overlay" class="overlay"></div>
+
+<!-- HERO SLIDER WITH TEXT OVERLAYS & DUAL CTAS -->
+<div class="slider">
+    <div class="slides">
+        <div class="slide active">
+            <img src="images/hero-slide-1.jpg" alt="Academic Excellence">
+            <div class="hero-overlay">
+                <h2>Pioneering Digital Literacy & STEM Excellence</h2>
+                <p>Equipping students with future-ready skills in modern labs and interactive classrooms.</p>
+                <div class="hero-cta-group">
+                    <a href="apply.html" class="btn btn-primary">Apply for Admission</a>
+                    <a href="portal.html" class="btn btn-secondary">Access Portal</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <img src="images/hero-slide-2.jpg" alt="Leadership & Values">
+            <div class="hero-overlay">
+                <h2>Building Character, Discipline, and Future Leaders</h2>
+                <p>Fostering academic rigor alongside strong moral foundation and leadership skills.</p>
+                <div class="hero-cta-group">
+                    <a href="apply.html" class="btn btn-primary">Apply for Admission</a>
+                    <a href="about.html" class="btn btn-secondary">Learn About Us</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <img src="images/hero-slide-3.jpg" alt="Sports & Co-Curriculars">
+            <div class="hero-overlay">
+                <h2>Nurturing Talents Beyond the Classroom</h2>
+                <p>Engaging students in athletics, creative arts, and vibrant extracurricular activities.</p>
+                <div class="hero-cta-group">
+                    <a href="apply.html" class="btn btn-primary">Enroll Today</a>
+                    <a href="academics.html" class="btn btn-secondary">Explore Programs</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <img src="images/hero-slide-4.jpg" alt="Admissions Open">
+            <div class="hero-overlay">
+                <h2>Admissions Open for New Academic Term</h2>
+                <p>Join the Heirs of Promise family today and set your child on the path to success.</p>
+                <div class="hero-cta-group">
+                    <a href="apply.html" class="btn btn-primary">Start Application</a>
+                    <a href="contact.html" class="btn btn-secondary">Contact Admissions</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manual Navigation Controls -->
+    <button class="slider-btn prev-btn" id="prevSlide" aria-label="Previous Slide">&#10094;</button>
+    <button class="slider-btn next-btn" id="nextSlide" aria-label="Next Slide">&#10095;</button>
+
+    <!-- Slide Indicator Dots -->
+    <div class="slider-dots" id="sliderDots">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+        <span class="dot" data-index="3"></span>
+    </div>
+</div>
+
+<main class="content">
+    <!-- Card 1: WAEC/BECE Preparation & Tutorials -->
+    <div class="video-card" onclick="window.location.href='blog-waec-bece-prep.html'">
+        <h4>Preparing for WAEC/BECE Exams & Tutorials</h4>
+        <p>Comprehensive strategies, past question drills, and mock exam benchmarks for candidate success.</p>
+        <span class="card-meta">HOPS Updates • Jan 2026</span>
+    </div>
+
+    <!-- Card 2: Principal's Welcome Vision -->
+    <div class="video-card" onclick="window.location.href='blog-principal-welcome.html'">
+        <h4>Principal's Welcome & Academic Term Vision</h4>
+        <p>Insights into our academic goals, character education, and institutional development strategies.</p>
+        <span class="card-meta">HOPS Updates • Jan 2026</span>
+    </div>
+
+    <!-- Card 3: STEM & Coding Workshop -->
+    <div class="video-card" onclick="window.location.href='blog-coding-workshop.html'">
+        <h4>Inside Our Coding & Web Development Workshop</h4>
+        <p>Students showcase real-world projects, web design principles, and software solutions.</p>
+        <span class="card-meta">HOPS Updates • Feb 2026</span>
+    </div>
+
+    <!-- Card 4: PTA Meeting Highlights -->
+    <div class="video-card" onclick="window.location.href='blog-pta-meeting-highlights.html'">
+        <h4>News and Reviews on PTA Meeting</h4>
+        <p>Key resolutions, academic progress reviews, and home-school collaboration strategies.</p>
+        <span class="card-meta">HOPS Updates • Feb 2026</span>
+    </div>
+
+    <!-- Card 5: Inter-House Sports -->
+    <div class="video-card" onclick="window.location.href='blog-interhouse-sports.html'">
+        <h4>2026 Inter-House Sports Competition Highlights</h4>
+        <p>Celebrating athletic prowess, teamwork, sportsmanship, and overall house standings.</p>
+        <span class="card-meta">HOPS Updates • Dec 2025</span>
+    </div>
+
+    <!-- Card 6: Student Spotlight & Academic Merit -->
+    <div class="video-card" onclick="window.location.href='blog-student-spotlight.html'">
+        <h4>Celebrating Student of the Month & Merit Awards</h4>
+        <p>Honoring outstanding academic achievements, moral excellence, and peer leadership.</p>
+        <span class="card-meta">HOPS Updates • Mar 2026</span>
+    </div>
+
+    <!-- Card 7: Cultural & Arts Exhibition -->
+    <div class="video-card" onclick="window.location.href='blog-arts-exhibition.html'">
+        <h4>Highlights from Cultural & Arts Exhibition Day</h4>
+        <p>A vibrant celebration of cultural diversity, creative artwork, music, and stage performances.</p>
+        <span class="card-meta">HOPS Updates • Mar 2026</span>
+    </div>
+
+    <!-- Card 8: Hands-On Science Practicals -->
+    <div class="video-card" onclick="window.location.href='blog-science-practicals.html'">
+        <h4>Empowering Future Scientists: Lab Practicals</h4>
+        <p>Hands-on experimental work in physics, chemistry, and biology laboratories.</p>
+        <span class="card-meta">HOPS Updates • Mar 2026</span>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4>HOPS Schools</h4>
+            <p>Excellence in education, character, and leadership.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <a href="about.html">About Us</a>
+            <a href="academics.html">Academics</a>
+            <a href="apply.html">Admissions</a>
+            <a href="portal.html">Student Portal</a>
+        </div>
+        <div class="footer-col">
+            <h4>Support</h4>
+            <a href="contact.html">Help Center</a>
+            <a href="library.html">E-Library</a>
+            <a href="subscriptions.html">Tuition & Payments</a>
+        </div>
+        <div class="footer-col">
+            <h4>Follow Us</h4>
+            <div class="social-icons">
+                <span>FB</span> <span>TW</span> <span>IG</span> <span>LN</span>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Heirs of Promise Schools. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

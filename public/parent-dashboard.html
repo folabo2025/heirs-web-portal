@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Dashboard | HOPS Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="dashboard-body">
+
+<div class="dashboard-wrapper">
+    <aside class="dash-sidebar" style="background: #2d3748;">
+        <div class="dash-logo">HOPS Parent</div>
+        <nav>
+            <a href="#" class="active">📊 <span>Child's Progress</span></a>
+            <a href="#">💳 <span>Fee Payments</span></a>
+            <a href="#">📈 <span>Termly Results</span></a>
+            <a href="#">📩 <span>Teacher Contact</span></a>
+            <a href="portal.html" class="logout">🚪 <span>Logout</span></a>
+        </nav>
+    </aside>
+
+    <main class="dash-main">
+        <header class="dash-header">
+            <div class="header-text">
+                <h2>Welcome, <span class="student-name">Mrs. Okon</span>!</h2>
+                <p>Monitoring progress for: <strong>Blessing Okon (SS3)</strong></p>
+            </div>
+            <div class="user-profile">
+                <img src="images/blessing chess child.png" alt="Blessing's Profile">
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card blue">
+                <h3>Average Score</h3>
+                <p class="stat-val">82.4%</p>
+                <small>Improved by 4%</small>
+            </div>
+            <div class="stat-card orange" style="background: linear-gradient(135deg, #b91c1c, #ef4444);">
+                <h3>Fees Balance</h3>
+                <p class="stat-val">₦45,000</p>
+                <small>Due: March 1st</small>
+            </div>
+            <div class="stat-card green">
+                <h3>Next Event</h3>
+                <p class="stat-val">PTA</p>
+                <small>March 15th, 10 AM</small>
+            </div>
+        </section>
+
+        <div class="dash-content-grid">
+            <div class="dash-card">
+                <h3>📑 Recent Subject Grades</h3>
+                <table class="dash-table">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Mid-Term</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mathematics</td>
+                            <td><strong>88</strong></td>
+                            <td style="color: green;">Exceeding</td>
+                        </tr>
+                        <tr>
+                            <td>English</td>
+                            <td><strong>74</strong></td>
+                            <td style="color: blue;">Good</td>
+                        </tr>
+                        <tr>
+                            <td>Physics</td>
+                            <td><strong>91</strong></td>
+                            <td style="color: green;">Exceptional</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="view-all-btn">Download Full Report</button>
+            </div>
+
+            <div class="dash-card">
+                <h3>💳 Payment History</h3>
+                <div class="assignment-list">
+                    <div class="assignment-item">
+                        <p><strong>Tuition Fee</strong></p>
+                        <span>Jan 15 - Paid</span>
+                    </div>
+                    <hr>
+                    <div class="assignment-item">
+                        <p><strong>Library Levy</strong></p>
+                        <span>Jan 20 - Paid</span>
+                    </div>
+                </div>
+                <button class="view-all-btn" style="background: #1a237e; color: white;">Pay Outstanding Balance</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>

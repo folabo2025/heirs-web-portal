@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Messages | HOPS Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        .chat-card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+            min-height: 520px;
+        }
+
+        @media (max-width: 768px) {
+            .chat-card {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chat-list {
+            border-right: 1px solid #eef2f5;
+            padding-right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .chat-list {
+                border-right: none;
+                border-bottom: 1px solid #eef2f5;
+                padding-right: 0;
+                padding-bottom: 15px;
+            }
+        }
+
+        .chat-user {
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #f8f9fa;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .chat-user:hover {
+            background: #f0f4f8;
+        }
+
+        .chat-user.active {
+            background: #e3f2fd;
+            border-left-color: #1a237e;
+        }
+
+        .chat-user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .chat-user-name {
+            font-weight: 700;
+            color: #1a237e;
+            font-size: 14px;
+        }
+
+        .chat-user-time {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .chat-user-subtitle {
+            font-size: 12px;
+            color: #666;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-window {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .chat-header {
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eef2f5;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header-info h4 {
+            margin: 0;
+            color: #1a237e;
+            font-size: 16px;
+        }
+
+        .chat-header-info span {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .status-badge {
+            font-size: 12px;
+            color: #2e7d32;
+            background: #e8f5e9;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .message-history {
+            flex-grow: 1;
+            padding: 14px;
+            background: #fafafa;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow-y: auto;
+            max-height: 360px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .msg-bubble {
+            max-width: 75%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .msg-in {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            align-self: flex-start;
+            color: #333;
+        }
+
+        .msg-out {
+            background: #1a237e;
+            color: #ffffff;
+            align-self: flex-end;
+        }
+
+        .msg-meta {
+            font-size: 10px;
+            opacity: 0.7;
+            margin-top: 4px;
+            text-align: right;
+            display: block;
+        }
+
+        .chat-input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .chat-input:focus {
+            border-color: #1a237e;
+            box-shadow: 0 0 0 2px rgba(26, 35, 126, 0.1);
+        }
+
+        .send-btn {
+            background: #1a237e;
+            color: #ffffff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+
+        .send-btn:hover {
+            background: #0d145a;
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+
+<div class="dashboard-wrapper">
+    <aside class="dash-sidebar">
+        <div class="dash-logo">HOPS Staff</div>
+        <nav>
+            <a href="staff-dashboard.html">📊 <span>Overview</span></a>
+            <a href="student-records.html">👨‍🎓 <span>Student Records</span></a>
+            <a href="grading-sheet.html">📝 <span>Grading System</span></a>
+            <a href="lesson-planner.html">📅 <span>Lesson Planner</span></a>
+            <a href="parent-messages.html" class="active">💬 <span>Parent Messages</span></a>
+            <a href="javascript:void(0)" class="logout" onclick="performLogout()">🚪 <span>Logout</span></a>
+        </nav>
+    </aside>
+
+    <main class="dash-main">
+        <header class="dash-header">
+            <div class="header-text">
+                <h2>Parent Messages 💬</h2>
+                <p>Communicate directly with parents regarding student progress.</p>
+            </div>
+        </header>
+
+        <section class="chat-card">
+            <div class="chat-list" id="chatList">
+                <div class="chat-user active" onclick="switchChat('Mrs. Tosanwunmi', 'Re: Physics Performance', 'tosanwunmi', event)">
+                    <div class="chat-user-header">
+                        <span class="chat-user-name">Mrs. Tosanwunmi</span>
+                        <span class="chat-user-time">10:42 AM</span>
+                    </div>
+                    <p class="chat-user-subtitle">Re: Physics Performance</p>
+                </div>
+                
+                <div class="chat-user" onclick="switchChat('Mr. Okon', 'Re: Attendance status', 'okon', event)">
+                    <div class="chat-user-header">
+                        <span class="chat-user-name">Mr. Okon</span>
+                        <span class="chat-user-time">Yesterday</span>
+                    </div>
+                    <p class="chat-user-subtitle">Re: Attendance status</p>
+                </div>
+
+                <div class="chat-user" onclick="switchChat('Chief Babatunde', 'Re: Terminal Assessment', 'babatunde', event)">
+                    <div class="chat-user-header">
+                        <span class="chat-user-name">Chief Babatunde</span>
+                        <span class="chat-user-time">Monday</span>
+                    </div>
+                    <p class="chat-user-subtitle">Re: Terminal Assessment</p>
+                </div>
+            </div>
+
+            <div class="chat-window">
+                <div class="chat-header">
+                    <div class="chat-header-info">
+                        <h4 id="activeParentName">Mrs. Tosanwunmi</h4>
+                        <span id="activeSubject">Re: Physics Performance</span>
+                    </div>
+                    <span class="status-badge">● Active</span>
+                </div>
+
+                <div class="message-history" id="messageHistory">
+                    <div class="msg-bubble msg-in">
+                        <strong>Mrs. Tosanwunmi:</strong> Good day Mr. Folabo, please how is Ifeoluwa performing in Physics this term?
+                        <span class="msg-meta">10:30 AM</span>
+                    </div>
+                    <div class="msg-bubble msg-out">
+                        <strong>You:</strong> Hello Ma. She scored 89% in the current evaluation! Excellent performance so far.
+                        <span class="msg-meta">10:42 AM</span>
+                    </div>
+                </div>
+
+                <form class="chat-input-row" onsubmit="sendMessage(event)">
+                    <input type="text" id="chatInput" class="chat-input" placeholder="Type your message..." required autocomplete="off">
+                    <button type="submit" class="send-btn">Send 🚀</button>
+                </form>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="script.js"></script>
+<script>
+    function performLogout() {
+        sessionStorage.removeItem('currentUser');
+        localStorage.removeItem('currentUser');
+        window.location.href = 'portal.html';
+    }
+
+    const conversations = {
+        tosanwunmi: {
+            name: 'Mrs. Tosanwunmi',
+            topic: 'Re: Physics Performance',
+            messages: [
+                { sender: 'Mrs. Tosanwunmi', text: 'Good day Mr. Folabo, please how is Ifeoluwa performing in Physics this term?', type: 'in', time: '10:30 AM' },
+                { sender: 'You', text: 'Hello Ma. She scored 89% in the current evaluation! Excellent performance so far.', type: 'out', time: '10:42 AM' }
+            ]
+        },
+        okon: {
+            name: 'Mr. Okon',
+            topic: 'Re: Attendance status',
+            messages: [
+                { sender: 'Mr. Okon', text: 'Good afternoon. I wanted to verify Blessing\'s attendance for this week.', type: 'in', time: 'Yesterday' },
+                { sender: 'You', text: 'Good afternoon sir. Blessing has 100% attendance recorded for this week.', type: 'out', time: 'Yesterday' }
+            ]
+        },
+        babatunde: {
+            name: 'Chief Babatunde',
+            topic: 'Re: Terminal Assessment',
+            messages: [
+                { sender: 'Chief Babatunde', text: 'Greetings. Please when will the final exam schedule be released?', type: 'in', time: 'Monday' },
+                { sender: 'You', text: 'Greetings Chief. The timetable will be published on the portal next week Monday.', type: 'out', time: 'Monday' }
+            ]
+        }
+    };
+
+    let activeKey = 'tosanwunmi';
+
+    function switchChat(name, topic, key, evt) {
+        activeKey = key;
+        document.getElementById('activeParentName').textContent = name;
+        document.getElementById('activeSubject').textContent = topic;
+
+        const userItems = document.querySelectorAll('.chat-user');
+        userItems.forEach(item => item.classList.remove('active'));
+        
+        if (evt && evt.currentTarget) {
+            evt.currentTarget.classList.add('active');
+        }
+
+        renderMessages();
+    }
+
+    function renderMessages() {
+        const history = document.getElementById('messageHistory');
+        history.innerHTML = '';
+
+        const currentChat = conversations[activeKey];
+        if (currentChat && currentChat.messages) {
+            currentChat.messages.forEach(msg => {
+                const bubble = document.createElement('div');
+                bubble.className = `msg-bubble msg-${msg.type}`;
+                bubble.innerHTML = `
+                    <strong>${msg.sender}:</strong> ${msg.text}
+                    <span class="msg-meta">${msg.time}</span>
+                `;
+                history.appendChild(bubble);
+            });
+        }
+        history.scrollTop = history.scrollHeight;
+    }
+
+    function sendMessage(event) {
+        event.preventDefault();
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+
+        if (text) {
+            const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            conversations[activeKey].messages.push({
+                sender: 'You',
+                text: text,
+                type: 'out',
+                time: currentTime
+            });
+
+            renderMessages();
+            input.value = '';
+        }
+    }
+</script>
+
+</body>
+</html>

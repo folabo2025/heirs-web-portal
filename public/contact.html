@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Heirs of Promise Schools</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="contact.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="left">
+        <div class="hamburger" id="menuIcon" onclick="toggleMenu()">☰</div>
+        <a href="index.html" class="logo">Heirs of Promise Schools</a>
+    </div>
+    <div class="right">
+        <div class="signup" onclick="window.location.href='apply.html'">Apply Now</div>
+    </div>
+</header>
+
+<nav id="sideMenu" class="side-menu">
+    <ul>
+        <li><a href="index.html">🏠 Home</a></li>
+        <li><a href="academics.html">📁 Academics</a></li>
+        <li><a href="admissions.html">📁 Admissions</a></li>
+        <li><a href="subscriptions.html">📺 Subscriptions</a></li>
+        <li><a href="library.html">📁 Library</a></li>
+        <li><a href="about.html">📁 About</a></li>
+        <li><a href="contact.html">📁 Contact</a></li>
+        <li><a href="portal.html" class="portal-btn">🚀 Portal</a></li>
+    </ul>
+</nav>
+
+<div id="overlay" class="overlay"></div>
+
+<section class="contact-wrapper">
+    <div class="contact-container">
+        <div class="contact-info">
+            <h2>Get in Touch</h2>
+            <p>Have questions? We're here to help you and your child's educational journey.</p>
+            
+            <div class="info-item">
+                <span class="icon">📍</span>
+                <div>
+                    <h4>Location</h4>
+                    <p>123 Education Lane, Victoria Island, Lagos, Nigeria</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="icon">📞</span>
+                <div>
+                    <h4>Phone</h4>
+                    <p>+234 800 123 4567</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="icon">✉️</span>
+                <div>
+                    <h4>Email</h4>
+                    <p>info@heirsofpromise.sch.ng</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form-box">
+            <form>
+                <div class="input-group">
+                    <label>Your Name</label>
+                    <input type="text" placeholder="Enter your full name" required>
+                </div>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="email@example.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Subject</label>
+                    <select>
+                        <option>General Inquiry</option>
+                        <option>Admissions</option>
+                        <option>School Portal Help</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Message</label>
+                    <textarea rows="5" placeholder="How can we help?" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="map-section">
+        <div class="map-placeholder">
+            <p>📍 Google Maps View: 123 Education Lane, VI, Lagos</p>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4>HOPS Schools</h4>
+            <p>Excellence in education, character, and leadership.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <a href="about.html">About Us</a>
+            <a href="academics.html">Academics</a>
+            <a href="apply.html">Admissions</a>
+            <a href="portal.html">Student Portal</a>
+        </div>
+        <div class="footer-col">
+            <h4>Support</h4>
+            <a href="contact.html">Help Center</a>
+            <a href="library.html">E-Library</a>
+            <a href="subscriptions.html">Payments</a>
+        </div>
+        <div class="footer-col">
+            <h4>Follow Us</h4>
+            <div class="social-icons">
+                <span>FB</span> <span>TW</span> <span>IG</span> <span>LN</span>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Heirs of Promise Schools. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

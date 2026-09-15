@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Post | Heirs of Promise Schools</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="blog.css"> 
+</head>
+<body>
+
+<header class="header">
+    <div class="left">
+        <div class="hamburger" id="menuIcon" onclick="toggleMenu()">☰</div>
+        <div class="logo">HOPS Blog</div>
+    </div>
+    <div class="right">
+        <div class="signup" onclick="window.location.href='index.html'">Back to Home</div>
+    </div>
+</header>
+
+<nav id="sideMenu" class="side-menu">
+    <ul>
+        <li><a href="index.html">🏠 Home</a></li>
+        <li><a href="academics.html">📁 Academics</a></li>
+        <li><a href="admissions.html">📁 Admissions</a></li>
+        <li><a href="subscriptions.html">📺 Subscriptions</a></li>
+        <li><a href="library.html">📁 Library</a></li>
+        <li><a href="about.html">📁 About</a></li>
+        <li><a href="contact.html">📁 Contact</a></li>
+        <li><a href="portal.html" class="portal-btn">🚀 Portal</a></li>
+    </ul>
+</nav>
+
+<div id="overlay" class="overlay"></div>
+
+<div class="blog-layout-container">
+    <main class="blog-main-content">
+        <article class="post-container">
+            <div class="post-header">
+                <span class="category-tag">Events</span>
+                <h1>Building a Legacy: Highlights from the 2026 PTA General Meeting</h1>
+                <p class="post-meta">Published on February 20, 2026 • By School Administration • 6 min read</p>
+                <img src="images/pta meeting_cropped_processed_by_imagy.jpg" alt="PTA Meeting" class="featured-image">
+            </div>
+
+            <div class="post-content">
+                <p class="lead-paragraph">
+                    On a sun-drenched Saturday morning, the Heirs of Promise Schools (HOPS) auditorium buzzed with an energy that could only be described as collaborative. Our 2026 Parent-Teacher Association (PTA) General Meeting wasn't just a meeting; it was a reaffirmation of our shared commitment to excellence.
+                </p>
+
+                <p>
+                    The session opened with an inspiring address by our Principal, who highlighted the remarkable achievements of our students in the recent regional STEM competition. "We aren't just teaching subjects," she noted, "we are cultivating the leaders who will navigate the complexities of the mid-21st century."
+                </p>
+
+                <h3>The Digital Transformation Initiative</h3>
+                <p>
+                    The most discussed topic of the day was the official rollout of our <strong>AI-Assisted Learning Program</strong>. Recognizing that the world is changing rapidly, HOPS is investing in state-of-the-art software that adapts to each child’s unique learning pace. This isn't about replacing teachers, but empowering them with data to identify exactly where a student needs more support.
+                </p>
+
+                <blockquote>
+                    "Education is the most powerful weapon which you can use to change the world, but only if that education stays relevant to the times."
+                </blockquote>
+
+                <h3>Academic Excellence & Support</h3>
+                <p>
+                    Responding to valuable feedback from our senior secondary parents, the board has approved <strong>extended library hours</strong>. Starting next term, the library will remain open until 6:00 PM during examination weeks, providing a quiet, resource-rich environment for focused study. Additionally, we are introducing "Peer Tutoring Saturdays," where top-performing students mentor their juniors under teacher supervision.
+                </p>
+
+                <h3>Infrastructure & Safety Upgrades</h3>
+                <p>
+                    We are pleased to announce that the Phase 2 expansion of our Science Laboratory is 85% complete. This new wing will house dedicated stations for Advanced Robotics and Renewable Energy research. On the safety front, new biometric check-in points have been installed at the main gate to further enhance our security protocol for all students and visitors.
+                </p>
+
+                <h3>Sports and Extracurriculars</h3>
+                <p>
+                    The meeting concluded with the unveiling of the <strong>2026 Inter-House Sports Calendar</strong>. This year, we are introducing two new competitive categories: Archery and Coding Challenges, ensuring that every student—whether an athlete or a tech enthusiast—has a platform to shine.
+                </p>
+
+                <p>
+                    We want to extend our deepest gratitude to the PTA Executive Board and the hundreds of parents who took the time to participate. Your insights, critiques, and encouragement are the fuel that keeps the HOPS engine running.
+                </p>
+
+                <div class="post-tags">
+                    <span>#HOPS2026</span> <span>#Education</span> <span>#Community</span> <span>#AIinSchools</span>
+                </div>
+            </div>
+
+            <section class="comment-section">
+                <h3 class="comment-count">1 Comment</h3>
+                
+                <div class="comment-input-wrapper">
+                    <form class="comment-form" id="mainCommentForm">
+                        <input type="text" id="userName" placeholder="Your Name" required class="comment-name-input">
+                        
+                        <div id="hiddenFields" class="hidden-comment-fields">
+                            <textarea id="userComment" placeholder="Add a comment..." rows="1" required class="comment-text-input"></textarea>
+                            <div class="form-actions">
+                                <button type="button" class="cancel-btn" onclick="collapseForm()">Cancel</button>
+                                <button type="submit" class="submit-comment">Comment</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="comments-display">
+                    <div class="comment-item">
+                        <div class="user-avatar">S</div>
+                        <div class="comment-details">
+                            <div class="comment-header">
+                                <strong>Parent Sarah</strong>
+                                <span class="comment-date">2 days ago</span>
+                            </div>
+                            <p>This is wonderful news about the AI tools! My son is very excited. It's great to see HOPS staying ahead of the curve.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <aside class="blog-sidebar">
+        <h3>Upcoming & Related</h3>
+        <div class="side-card" onclick="window.location.href='blog-post.html'">
+            <img src="images/blessing chess child.png" alt="News">
+            <div class="side-card-info">
+                <h4>Inter-house Sports 2026</h4>
+                <p>March 15th • Events</p>
+            </div>
+        </div>
+        <div class="side-card" onclick="window.location.href='blog-post.html'">
+            <img src="images/tutorialielts.png" alt="News">
+            <div class="side-card-info">
+                <h4>IELTS Prep Classes</h4>
+                <p>Feb 28th • Academic</p>
+            </div>
+        </div>
+        <div class="side-card" onclick="window.location.href='blog-post.html'">
+            <img src="images/midterm exams_cropped_processed_by_imagy.jpg" alt="News">
+            <div class="side-card-info">
+                <h4>Exam Success Tips</h4>
+                <p>March 02 • News</p>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<footer class="footer">
+    </footer>
+
+<script src="script.js"></script>
+</body>
+</html>

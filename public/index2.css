@@ -1,0 +1,258 @@
+/* --- GLOBAL RESET & BRAND COLORS --- */
+:root {
+    --primary-blue: #1a237e;    /* Deep Academic Blue */
+    --accent-blue: #1a73e8;     /* Action Blue */
+    --light-bg: #f8fafc;
+    --white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--light-bg);
+    color: var(--text-dark);
+}
+
+/* --- BRANDED HEADER --- */
+.header {
+    background: var(--white);
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4%;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+}
+
+.header .left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* The Branding Touch */
+.logo {
+    font-weight: 800;
+    color: var(--primary-blue);
+    font-size: 1.3rem;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Use your trimmed logo.png as a small badge in the header too */
+.logo::before {
+    content: "";
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: url('images/trimmed logo.png') no-repeat center/contain;
+}
+
+.hamburger {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--primary-blue);
+    padding: 5px;
+    transition: 0.3s;
+}
+
+/* --- CENTER SEARCH BAR (The "Smooth" Look) --- */
+.center {
+    display: flex;
+    background: #f1f5f9;
+    border-radius: 50px;
+    padding: 5px 15px;
+    width: 30%;
+    border: 1px solid transparent;
+    transition: 0.3s;
+}
+
+.center:focus-within {
+    background: var(--white);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.1);
+}
+
+.center input {
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 8px;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.center button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* --- RIGHT ACTIONS --- */
+.signup {
+    background: var(--accent-blue);
+    color: var(--white);
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.signup:hover {
+    background: var(--primary-blue);
+    transform: translateY(-2px);
+}
+
+/* --- SIDE MENU (Navigation Drawer) --- */
+.side-menu {
+    position: fixed;
+    left: -300px;
+    top: 0;
+    width: 280px;
+    height: 100%;
+    background: var(--primary-blue);
+    color: var(--white);
+    padding-top: 80px;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 3000;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.2);
+}
+
+.side-menu.active { left: 0; }
+
+.side-menu ul { list-style: none; }
+
+.side-menu ul li a {
+    display: block;
+    padding: 18px 30px;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.side-menu ul li a:hover {
+    background: rgba(255,255,255,0.1);
+    color: var(--white);
+    padding-left: 40px;
+}
+
+.portal-btn {
+    background: var(--accent-blue) !important;
+    margin: 20px 30px;
+    border-radius: 12px;
+    text-align: center;
+    color: white !important;
+}
+
+.overlay {
+    position: fixed;
+    display: none;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 2500;
+}
+
+/* --- IMAGE SLIDER --- */
+.slider {
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+}
+
+.slides img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slides img.active { opacity: 1; }
+
+/* --- CONTENT GRID (News/Blog) --- */
+.content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    padding: 40px 4%;
+}
+
+.video-card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 1px solid #e2e8f0;
+}
+
+.video-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.video-card h4 {
+    padding: 15px 15px 5px;
+    color: var(--primary-blue);
+}
+
+.video-card p {
+    padding: 0 15px 20px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* --- FOOTER (Same as previous for consistency) --- */
+.footer {
+    background: var(--primary-blue);
+    color: var(--white);
+    padding: 60px 5% 30px;
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+}
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 40px;
+    padding-top: 20px;
+    opacity: 0.6;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 800px) {
+    .center { display: none; } /* Hide search on small mobile */
+    .slider { height: 300px; }
+    .slides img { height: 300px; }
+    .logo { font-size: 1.1rem; }
+}

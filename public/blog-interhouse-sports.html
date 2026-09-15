@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inter-House Sports Competition | Heirs of Promise Schools</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="blog.css"> 
+</head>
+<body>
+
+<header class="header">
+    <div class="left">
+        <div class="hamburger" id="menuIcon" onclick="toggleMenu()">☰</div>
+        <div class="logo">HOPS Blog</div>
+    </div>
+    <div class="right">
+        <div class="signup" onclick="window.location.href='index.html'">Back to Home</div>
+    </div>
+</header>
+
+<nav id="sideMenu" class="side-menu">
+    <ul>
+        <li><a href="index.html">🏠 Home</a></li>
+        <li><a href="academics.html">📁 Academics</a></li>
+        <li><a href="admissions.html">📁 Admissions</a></li>
+        <li><a href="subscriptions.html">📺 Subscriptions</a></li>
+        <li><a href="library.html">📁 Library</a></li>
+        <li><a href="about.html">📁 About</a></li>
+        <li><a href="contact.html">📁 Contact</a></li>
+        <li><a href="portal.html" class="portal-btn">🚀 Portal</a></li>
+    </ul>
+</nav>
+
+<div id="overlay" class="overlay"></div>
+
+<div class="blog-layout-container">
+    <main class="blog-main-content">
+        <article class="post-container">
+            <div class="post-header">
+                <span class="category-tag">Sports & Culture</span>
+                <h1>Heirs of Promise Inter-House Sports Competition: Highlights and Winner Announcements</h1>
+                <p class="post-meta">Published on March 5, 2026 • By Sports & Co-Curricular Committee • 4 min read</p>
+                <img src="images/interhouse_sports_highlights.jpg" alt="Inter-House Sports Highlights" class="featured-image">
+            </div>
+
+            <div class="post-content">
+                <p class="lead-paragraph">
+                    Energy, athletic prowess, and vibrant sportsmanship took center stage as Heirs of Promise Schools hosted its annual Inter-House Sports Competition. Students, faculty, and parents gathered on the main sports field for a day of spirited athletic rivalry and house celebration.
+                </p>
+
+                <p>
+                    The event featured track and field activities, including short sprints, long-distance relays, high jump, tug-of-war, and a disciplined march-past parade judged on precision and coordination.
+                </p>
+
+                <h3>1. High-Energy Athletic Events & March-Past</h3>
+                <p>
+                    The tournament began with the traditional parade march, where Blue, Red, Yellow, and Green Houses showcased outstanding discipline and creative choreography. Track events followed, with student athletes pushing their physical limits in the 100m, 200m, and 4x100m relay races to score crucial points for their respective houses.
+                </p>
+
+                <blockquote>
+                    "Sports teach our students invaluable life lessons—resilience under pressure, the reward of discipline, and the true meaning of athletic sportsmanship."
+                </blockquote>
+
+                <h3>2. House Rankings & Champion Announcement</h3>
+                <p>
+                    Following points tallying across track events, field activities, and March-Past scores, **Blue House** emerged as overall champions of the competition, securing first place with maximum points. **Red House** claimed a deserving runner-up spot, while **Green House** and **Yellow House** followed closely in performance.
+                </p>
+
+                <h3>3. Fostering Well-Rounded Development</h3>
+                <p>
+                    At Heirs of Promise Schools, physical health and team competition are essential components of our holistic educational framework. Beyond winning trophies, every participant demonstrated grit, teamwork, and community spirit throughout the sports meet.
+                </p>
+
+                <p>
+                    We congratulate all student-athletes, house patrons, and physical education instructors for organizing a memorable sports tournament.
+                </p>
+
+                <div class="post-tags">
+                    <span>#HOPSSports</span> <span>#InterHouseSports</span> <span>#HealthyLiving</span> <span>#Champions</span> <span>#StudentAthletes</span>
+                </div>
+            </div>
+
+            <section class="comment-section">
+                <h3 class="comment-count">0 Comments</h3>
+                
+                <div class="comment-input-wrapper">
+                    <form class="comment-form" id="mainCommentForm">
+                        <input type="text" id="userName" placeholder="Your Name" required class="comment-name-input">
+                        
+                        <div id="hiddenFields" class="hidden-comment-fields">
+                            <textarea id="userComment" placeholder="Add a comment..." rows="1" required class="comment-text-input"></textarea>
+                            <div class="form-actions">
+                                <button type="button" class="cancel-btn" onclick="collapseForm()">Cancel</button>
+                                <button type="submit" class="submit-comment">Comment</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="comments-display">
+                    <!-- Comments render here dynamically -->
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <aside class="blog-sidebar">
+        <h3>Upcoming & Related</h3>
+        <div class="side-card" onclick="window.location.href='blog-student-spotlight.html'">
+            <img src="images/student_spotlight.jpg" alt="Student Spotlight">
+            <div class="side-card-info">
+                <h4>Student of the Month</h4>
+                <p>Spotlight • Read Now</p>
+            </div>
+        </div>
+        <div class="side-card" onclick="window.location.href='blog-coding-workshop.html'">
+            <img src="images/ict_lab_showcase.jpg" alt="Coding Workshop">
+            <div class="side-card-info">
+                <h4>Coding & Tech Showcase</h4>
+                <p>Innovation • Read Now</p>
+            </div>
+        </div>
+        <div class="side-card" onclick="window.location.href='blog-waec-bece-prep.html'">
+            <img src="images/waec_bece_prep.jpg" alt="WAEC Prep">
+            <div class="side-card-info">
+                <h4>WAEC & BECE Prep Guide</h4>
+                <p>Academics • Read Now</p>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2026 Heirs of Promise Schools. All Rights Reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

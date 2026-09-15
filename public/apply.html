@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply Now | Heirs of Promise Schools</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="apply.css">
+</head>
+<body class="apply-body">
+
+<header class="header">
+    <div class="left">
+        <div class="hamburger" id="menuIcon" onclick="toggleMenu()">☰</div>
+        <a href="index.html" class="logo">HOPS Admissions</a>
+    </div>
+    <div class="right">
+        <div class="signup" onclick="window.location.href='portal.html'">Student Portal</div>
+    </div>
+</header>
+
+<nav id="sideMenu" class="side-menu">
+    <ul>
+        <li><a href="index.html">🏠 Home</a></li>
+        <li><a href="academics.html">📁 Academics</a></li>
+        <li><a href="admissions.html">📁 Admissions</a></li>
+        <li><a href="subscriptions.html">📺 Subscriptions</a></li>
+        <li><a href="library.html">📁 Library</a></li>
+        <li><a href="about.html">📁 About</a></li>
+        <li><a href="contact.html">📁 Contact</a></li>
+        <li><a href="apply.html" class="portal-btn active">🚀 Apply Now</a></li>
+    </ul>
+</nav>
+
+<div id="overlay" class="overlay"></div>
+
+<div class="apply-container">
+    <div class="apply-header">
+        <h1>Admission Application Form</h1>
+        <p>Join the HOPS family. Please fill out the form below accurately.</p>
+    </div>
+
+    <form class="apply-form">
+        <div class="form-section">
+            <h3><span class="step-num">1</span> Student Information</h3>
+            <div class="form-grid">
+                <div class="input-group">
+                    <label>First Name</label>
+                    <input type="text" placeholder="John" required>
+                </div>
+                <div class="input-group">
+                    <label>Last Name</label>
+                    <input type="text" placeholder="Doe" required>
+                </div>
+                <div class="input-group">
+                    <label>Date of Birth</label>
+                    <input type="date" required>
+                </div>
+                <div class="input-group">
+                    <label>Gender</label>
+                    <select required>
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="input-group full-width">
+                    <label>Applying for Grade/Class</label>
+                    <select required>
+                        <option value="">Select Level</option>
+                        <option value="js1">Junior Secondary 1 (JS1)</option>
+                        <option value="js2">Junior Secondary 2 (JS2)</option>
+                        <option value="ss1">Senior Secondary 1 (SS1)</option>
+                        <option value="ss2">Senior Secondary 2 (SS2)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3><span class="step-num">2</span> Parent/Guardian Details</h3>
+            <div class="form-grid">
+                <div class="input-group">
+                    <label>Parent Name</label>
+                    <input type="text" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input type="tel" placeholder="+234..." required>
+                </div>
+                <div class="input-group full-width">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="parent@example.com" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3><span class="step-num">3</span> Supporting Documents</h3>
+            <div class="input-group full-width">
+                <label>Previous School Result (PDF/Image)</label>
+                <input type="file" class="file-input">
+            </div>
+        </div>
+
+        <button type="submit" class="submit-app-btn">Submit Application</button>
+    </form>
+</div>
+
+<footer class="footer">
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4>HOPS Schools</h4>
+            <p>Excellence in education, character, and leadership.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <a href="about.html">About Us</a>
+            <a href="academics.html">Academics</a>
+            <a href="apply.html">Admissions</a>
+            <a href="portal.html">Student Portal</a>
+        </div>
+        <div class="footer-col">
+            <h4>Support</h4>
+            <a href="contact.html">Help Center</a>
+            <a href="library.html">E-Library</a>
+            <a href="subscriptions.html">Payments</a>
+        </div>
+        <div class="footer-col">
+            <h4>Follow Us</h4>
+            <div class="social-icons">
+                <span class="soc-icon">FB</span> 
+                <span class="soc-icon">TW</span> 
+                <span class="soc-icon">IG</span> 
+                <span class="soc-icon">LN</span>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Heirs of Promise Schools. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

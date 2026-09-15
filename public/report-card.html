@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Academic Report Card | Heirs of Promise Schools</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .report-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border: 2px solid #2c3e50;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .school-header {
+            text-align: center;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .school-header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #1a252f;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .school-header p {
+            margin: 4px 0 0 0;
+            font-size: 13px;
+            color: #555;
+        }
+        .report-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            background-color: #eee;
+            padding: 6px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .student-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        .student-details div {
+            background-color: #f8f9fa;
+            padding: 8px 12px;
+            border-left: 4px solid #2980b9;
+            border-radius: 2px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #2c3e50;
+            color: white;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        td.center, th.center {
+            text-align: center;
+        }
+        .summary-box {
+            display: flex;
+            justify-content: space-between;
+            background-color: #eef2f7;
+            padding: 12px 18px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed #aaa;
+        }
+        .signature-box {
+            text-align: center;
+            width: 40%;
+        }
+        .signature-line {
+            border-bottom: 1px solid #333;
+            margin-bottom: 5px;
+            height: 30px;
+        }
+        .print-actions {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn-print {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-print:hover {
+            background-color: #219150;
+        }
+        
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .report-card { border: none; box-shadow: none; padding: 0; width: 100%; max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="print-actions no-print">
+    <button class="btn-print" onclick="window.print()">🖨️ Print / Save PDF</button>
+</div>
+
+<div class="report-card">
+    <div class="school-header">
+        <h1>HEIRS OF PROMISE SCHOOLS</h1>
+        <p>Excellence in Knowledge, Character & Digital Technology</p>
+        <p>Lagos, Nigeria | Academic Terminal Report Card</p>
+    </div>
+
+    <div class="report-title">
+        STUDENT PERFORMANCE REPORT
+    </div>
+
+    <div class="student-details">
+        <div><strong>Student Name:</strong> <span id="lblStudentName">Loading...</span></div>
+        <div><strong>Student ID:</strong> <span id="lblStudentID">Loading...</span></div>
+        <div><strong>Class Level:</strong> <span id="lblStudentClass">Loading...</span></div>
+        <div><strong>Academic Term:</strong> 3rd Term / Terminal Evaluation</div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th class="center">CA 1 (20)</th>
+                <th class="center">CA 2 (20)</th>
+                <th class="center">Exam (60)</th>
+                <th class="center">Total (100)</th>
+                <th class="center">Grade</th>
+            </tr>
+        </thead>
+        <tbody id="reportGradesBody">
+            <tr>
+                <td colspan="6" class="center">Fetching student records...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="summary-box">
+        <div>Subjects Taken: <span id="lblTotalSubjects">0</span></div>
+        <div>Grand Total: <span id="lblGrandTotal">0</span> / <span id="lblMaxTotal">0</span></div>
+        <div>Overall Average: <span id="lblOverallAverage">0.00</span>%</div>
+    </div>
+
+    <div class="signature-section">
+        <div class="signature-box">
+            <div class="signature-line"></div>
+            <div>Class Teacher's Signature</div>
+        </div>
+        <div class="signature-box">
+            <div class="signature-line"></div>
+            <div>Principal / Admin Signature</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', loadStudentReportCard);
+
+    async function loadStudentReportCard() {
+        // 1. Extract studentId from URL parameter (?studentId=HOPS/ST/xxx)
+        const urlParams = new URLSearchParams(window.location.search);
+        let studentId = urlParams.get('studentId');
+
+        // Fallback: If no query param, try getting logged-in student session
+        if (!studentId) {
+            const currentStudent = JSON.parse(sessionStorage.getItem('currentStudent'));
+            if (currentStudent && currentStudent.id) {
+                studentId = currentStudent.id;
+            }
+        }
+
+        if (!studentId) {
+            alert('No student ID specified.');
+            document.getElementById('lblStudentName').innerText = 'Error: Missing Student ID';
+            return;
+        }
+
+        try {
+            // Fetch dynamically from backend
+            const response = await fetch(`/api/student-grades?studentId=${encodeURIComponent(studentId)}`);
+            const data = await response.json();
+
+            if (!data.success) {
+                alert('Failed to load student data: ' + data.message);
+                return;
+            }
+
+            // 2. Inject real student info into DOM
+            document.getElementById('lblStudentName').innerText = data.student.name || 'N/A';
+            document.getElementById('lblStudentID').innerText = data.student.id || studentId;
+            document.getElementById('lblStudentClass').innerText = data.student.class || 'N/A';
+
+            // 3. Inject score breakdown into table
+            const tbody = document.getElementById('reportGradesBody');
+            
+            if (!data.grades || data.grades.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="center" style="color:#888;">No recorded subject grades found for this student.</td></tr>';
+            } else {
+                tbody.innerHTML = data.grades.map(g => `
+                    <tr>
+                        <td><strong>${g.subject}</strong></td>
+                        <td class="center">${g.ca1 !== null ? g.ca1 : 0}</td>
+                        <td class="center">${g.ca2 !== null ? g.ca2 : 0}</td>
+                        <td class="center">${g.exam !== null ? g.exam : 0}</td>
+                        <td class="center"><strong>${g.total !== null ? g.total : 0}</strong></td>
+                        <td class="center"><strong>${g.grade || 'F'}</strong></td>
+                    </tr>
+                `).join('');
+            }
+
+            // 4. Inject aggregated totals
+            const totalSubjects = data.summary.totalSubjects || 0;
+            document.getElementById('lblTotalSubjects').innerText = totalSubjects;
+            document.getElementById('lblGrandTotal').innerText = data.summary.grandTotal || 0;
+            document.getElementById('lblMaxTotal').innerText = totalSubjects * 100;
+            document.getElementById('lblOverallAverage').innerText = data.summary.average || '0.00';
+
+        } catch (err) {
+            console.error('Error rendering report card:', err);
+            alert('Server connection error while generating report card.');
+        }
+    }
+</script>
+
+</body>
+</html>

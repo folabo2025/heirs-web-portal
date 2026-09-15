@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Entry Sheet | HOPS Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        .user-profile { position: relative; display: inline-block; }
+        .avatar-placeholder {
+            width: 45px; height: 45px; border-radius: 50%;
+            background-color: #1a237e; color: #ffffff; font-size: 18px; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid #e0e0e0; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-transform: uppercase; cursor: pointer; transition: transform 0.15s ease;
+        }
+        .avatar-placeholder:hover { transform: scale(1.05); }
+        .profile-dropdown {
+            display: none; position: absolute; right: 0; top: 55px;
+            background-color: #ffffff; min-width: 160px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); border-radius: 8px;
+            overflow: hidden; z-index: 1000; border: 1px solid #e0e0e0;
+        }
+        .profile-dropdown.show { display: block; }
+        .dropdown-item {
+            display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+            color: #333; font-weight: 600; font-size: 14px; text-decoration: none; cursor: pointer;
+        }
+        .dropdown-item:hover { background-color: #f4f6f9; }
+        .dropdown-item.logout-item { color: #d32f2f; border-top: 1px solid #f0f0f0; }
+        .dropdown-item.logout-item:hover { background-color: #ffebee; }
+        
+        .grade-save-btn {
+            background-color: #1a237e;
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .grade-save-btn:hover {
+            background-color: #0d1259;
+        }
+
+        .score-input {
+            width: 65px;
+            padding: 6px 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .grade-badge {
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        .badge-a { color: #2e7d32; background-color: #e8f5e9; }
+        .badge-b { color: #1565c0; background-color: #e3f2fd; }
+        .badge-c { color: #f57f17; background-color: #fffde7; }
+        .badge-d { color: #e65100; background-color: #fff3e0; }
+        .badge-e { color: #ef6c00; background-color: #fff8e1; }
+        .badge-f { color: #c62828; background-color: #ffebee; }
+
+        .action-btn-secondary {
+            background-color: #f4f6f9;
+            color: #1a237e;
+            border: 1px solid #1a237e;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .action-btn-secondary:hover {
+            background-color: #1a237e;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+
+<div class="dashboard-wrapper">
+    <aside class="dash-sidebar">
+        <div class="dash-logo">HOPS Staff</div>
+        <nav>
+            <a href="staff-dashboard.html">📊 <span>Overview</span></a>
+            <a href="student-records.html">👨‍🎓 <span>Student Records</span></a>
+            <a href="grading-sheet.html" class="active">📝 <span>Grading System</span></a>
+            <a href="lesson-planner.html">📅 <span>Lesson Planner</span></a>
+            <a href="parent-messages.html">💬 <span>Parent Messages</span></a>
+            <a href="javascript:void(0)" class="logout" onclick="performLogout()">🚪 <span>Logout</span></a>
+        </nav>
+    </aside>
+
+    <main class="dash-main">
+        <header class="dash-header">
+            <div>
+                <a href="staff-dashboard.html" style="text-decoration: none; color: #1a73e8; font-weight: 600; font-size: 0.9rem;">← Back to Overview</a>
+                <h2 style="margin-top: 10px;">Subject Score Entry 📝</h2>
+                <p style="color: #666; font-size: 1rem;">
+                    Class: <strong id="displayClass" style="color: #1a237e;">Select Class</strong> | 
+                    Subject: <strong id="displaySubject" style="color: #1a237e;">Select Subject</strong>
+                </p>
+            </div>
+
+            <div class="user-profile">
+                <div id="staffInitialDisplay" class="avatar-placeholder" onclick="toggleProfileDropdown(event)">ST</div>
+                <div id="profileDropdown" class="profile-dropdown">
+                    <a class="dropdown-item" onclick="alert('Viewing Staff Profile')">👤 Staff Profile</a>
+                    <a class="dropdown-item logout-item" onclick="performLogout()">🚪 Log Out</a>
+                </div>
+            </div>
+        </header>
+
+        <section class="dash-card" style="padding: 30px;">
+            <div class="grade-actions-bar" style="margin-bottom: 20px;">
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <button type="button" class="action-btn-secondary" onclick="downloadCSVTemplate()">📥 Download CSV Template</button>
+                    <label class="action-btn-secondary" style="cursor: pointer; display: inline-block; margin: 0;">
+                        📤 Import CSV Sheet
+                        <input type="file" id="csvFileInput" accept=".csv" style="display: none;" onchange="handleCSVImport(event)">
+                    </label>
+                </div>
+            </div>
+
+            <table class="dash-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Student Name</th>
+                        <th>1st CA (15)</th>
+                        <th>2nd CA (15)</th>
+                        <th>Exam (70)</th>
+                        <th>Total (100)</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody id="gradingTableBody">
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 20px; color: #666;">
+                            Loading student roster...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="display: flex; justify-content: flex-end; margin-top: 30px;">
+                <button type="button" class="grade-save-btn" onclick="saveGradingSheet()">💾 Save & Upload Grades</button>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="script.js"></script>
+<script>
+    let currentClass = '';
+    let currentSubject = '';
+    let studentList = [];
+
+    function toggleProfileDropdown(event) {
+        event.stopPropagation();
+        document.getElementById('profileDropdown').classList.toggle('show');
+    }
+
+    function performLogout() {
+        sessionStorage.clear();
+        localStorage.clear();
+        window.location.href = 'portal.html';
+    }
+
+    document.addEventListener('click', () => {
+        const dropdown = document.getElementById('profileDropdown');
+        if (dropdown && dropdown.classList.contains('show')) dropdown.classList.remove('show');
+    });
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Enforce dynamic user check & role segregation
+        const rawUser = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser');
+        if (rawUser) {
+            try {
+                const user = JSON.parse(rawUser);
+                const userName = user.full_name || user.fullName || user.name || 'Staff User';
+                
+                // Set Avatar initials
+                const parts = userName.trim().split(' ');
+                const initials = parts.length > 1 ? (parts[0][0] + parts[parts.length - 1][0]) : parts[0][0];
+                document.getElementById('staffInitialDisplay').textContent = initials.toUpperCase();
+            } catch (e) {
+                console.error('Error parsing session.');
+            }
+        }
+
+        // Parse query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        currentClass = decodeURIComponent(urlParams.get('class') || '').trim();
+        currentSubject = decodeURIComponent(urlParams.get('subject') || '').trim();
+
+        if (currentClass) document.getElementById('displayClass').textContent = currentClass;
+        if (currentSubject) document.getElementById('displaySubject').textContent = currentSubject;
+
+        if (!currentClass) {
+            document.getElementById('gradingTableBody').innerHTML = `
+                <tr>
+                    <td colspan="7" style="text-align: center; padding: 20px; color: #d32f2f;">
+                        No class selected. Please select a class from the Staff Dashboard.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        await fetchClassStudents(currentClass, currentSubject);
+    });
+
+    async function fetchClassStudents(className, subjectName) {
+        const tableBody = document.getElementById('gradingTableBody');
+        try {
+            let response = await fetch(`/api/students-by-class?class=${encodeURIComponent(className)}`);
+            if (!response.ok) {
+                response = await fetch(`/api/students?class=${encodeURIComponent(className)}&subject=${encodeURIComponent(subjectName)}`);
+            }
+            const data = await response.json();
+
+            if (data.success && data.students && data.students.length > 0) {
+                studentList = data.students;
+
+                let savedGradesMap = {};
+                try {
+                    const gradesResp = await fetch(`/api/grades?className=${encodeURIComponent(className)}&subject=${encodeURIComponent(subjectName)}`);
+                    const gradesData = await gradesResp.json();
+                    if (gradesData.success && Array.isArray(gradesData.grades)) {
+                        gradesData.grades.forEach(g => {
+                            savedGradesMap[g.student_id || g.studentId] = g;
+                        });
+                    }
+                } catch (e) {
+                    console.warn("Could not retrieve saved grades.");
+                }
+
+                renderStudentRows(studentList, savedGradesMap);
+            } else {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 20px; color: #666;">
+                            No registered students found in database for class: <strong>${className}</strong>.
+                        </td>
+                    </tr>`;
+            }
+        } catch (err) {
+            console.error('Error fetching students:', err);
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="7" style="text-align: center; padding: 20px; color: red;">
+                        Failed to load students. Please check network/server connection.
+                    </td>
+                </tr>`;
+        }
+    }
+
+    function renderStudentRows(students, savedGradesMap = {}) {
+        const tableBody = document.getElementById('gradingTableBody');
+        tableBody.innerHTML = '';
+
+        students.forEach((student, index) => {
+            const studentId = student.student_id || student.id;
+            const savedScore = savedGradesMap[studentId] || {};
+
+            const ca1 = savedScore.ca1 !== undefined ? savedScore.ca1 : (student.ca1 !== undefined && student.ca1 !== null ? student.ca1 : 0);
+            const ca2 = savedScore.ca2 !== undefined ? savedScore.ca2 : (student.ca2 !== undefined && student.ca2 !== null ? student.ca2 : 0);
+            const exam = savedScore.exam !== undefined ? savedScore.exam : (student.exam !== undefined && student.exam !== null ? student.exam : 0);
+
+            const row = document.createElement('tr');
+            row.setAttribute('data-student-id', studentId);
+
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>
+                    <strong>${student.full_name || student.name}</strong><br>
+                    <small style="color:#777;">${studentId}</small>
+                </td>
+                <td><input type="number" class="score-input ca1" min="0" max="15" value="${ca1}" oninput="calculateRowScore(this)"></td>
+                <td><input type="number" class="score-input ca2" min="0" max="15" value="${ca2}" oninput="calculateRowScore(this)"></td>
+                <td><input type="number" class="score-input exam" min="0" max="70" value="${exam}" oninput="calculateRowScore(this)"></td>
+                <td class="total-score" style="font-weight: bold; color: #1a237e;">0</td>
+                <td><span class="grade-badge badge-f">F</span></td>
+            `;
+
+            tableBody.appendChild(row);
+            calculateRowScore(row.querySelector('.score-input'));
+        });
+    }
+
+    function calculateRowScore(inputElement) {
+        const row = inputElement.closest('tr');
+        const ca1 = parseFloat(row.querySelector('.ca1').value) || 0;
+        const ca2 = parseFloat(row.querySelector('.ca2').value) || 0;
+        const exam = parseFloat(row.querySelector('.exam').value) || 0;
+
+        const total = Math.min(100, Math.max(0, ca1 + ca2 + exam));
+        row.querySelector('.total-score').textContent = total;
+
+        const gradeBadge = row.querySelector('.grade-badge');
+        let grade = 'F';
+        let badgeClass = 'badge-f';
+
+        if (total >= 70) { grade = 'A'; badgeClass = 'badge-a'; }
+        else if (total >= 60) { grade = 'B'; badgeClass = 'badge-b'; }
+        else if (total >= 50) { grade = 'C'; badgeClass = 'badge-c'; }
+        else if (total >= 45) { grade = 'D'; badgeClass = 'badge-d'; }
+        else if (total >= 40) { grade = 'E'; badgeClass = 'badge-e'; }
+
+        gradeBadge.textContent = grade;
+        gradeBadge.className = `grade-badge ${badgeClass}`;
+    }
+
+    async function saveGradingSheet() {
+        const rows = document.querySelectorAll('#gradingTableBody tr[data-student-id]');
+        const gradePayload = [];
+
+        rows.forEach(row => {
+            gradePayload.push({
+                student_id: row.getAttribute('data-student-id'),
+                studentId: row.getAttribute('data-student-id'),
+                class_name: currentClass,
+                className: currentClass,
+                subject: currentSubject,
+                ca1: parseFloat(row.querySelector('.ca1').value) || 0,
+                ca2: parseFloat(row.querySelector('.ca2').value) || 0,
+                exam: parseFloat(row.querySelector('.exam').value) || 0,
+                total: parseFloat(row.querySelector('.total-score').textContent) || 0,
+                grade: row.querySelector('.grade-badge').textContent
+            });
+        });
+
+        if (gradePayload.length === 0) {
+            alert('No student grade records available to save.');
+            return;
+        }
+
+        try {
+            let response = await fetch('/api/save-grades', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ className: currentClass, subject: currentSubject, grades: gradePayload })
+            });
+
+            if (!response.ok) {
+                response = await fetch('/api/grades/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ grades: gradePayload })
+                });
+            }
+
+            const result = await response.json();
+            if (response.ok && result.success) {
+                alert(`Grades saved successfully for ${currentClass} - ${currentSubject}!`);
+            } else {
+                alert(result.message || 'Failed to save grades. Please try again.');
+            }
+        } catch (err) {
+            console.error('Error saving grades:', err);
+            alert('Server connectivity issue while saving grades.');
+        }
+    }
+
+    function downloadCSVTemplate() {
+        const rows = document.querySelectorAll('#gradingTableBody tr[data-student-id]');
+        let csvContent = "Student ID,Student Name,1st CA (15),2nd CA (15),Exam (70)\n";
+
+        if (rows.length > 0) {
+            rows.forEach(row => {
+                const studentId = row.getAttribute('data-student-id') || '';
+                const nameElement = row.querySelector('strong');
+                const name = nameElement ? nameElement.textContent.replace(/,/g, '').trim() : '';
+
+                const ca1 = row.querySelector('.ca1') ? row.querySelector('.ca1').value : 0;
+                const ca2 = row.querySelector('.ca2') ? row.querySelector('.ca2').value : 0;
+                const exam = row.querySelector('.exam') ? row.querySelector('.exam').value : 0;
+
+                csvContent += `"${studentId}","${name}",${ca1},${ca2},${exam}\n`;
+            });
+        } else if (studentList && studentList.length > 0) {
+            studentList.forEach(student => {
+                const id = student.student_id || student.id;
+                const name = (student.full_name || student.name).replace(/,/g, '').trim();
+                csvContent += `"${id}","${name}",0,0,0\n`;
+            });
+        } else {
+            alert('No student data loaded to export template.');
+            return;
+        }
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", `${currentClass}_${currentSubject}_GradeSheet.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    function handleCSVImport(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const text = e.target.result;
+            const lines = text.split(/\r\n|\n/).map(l => l.trim()).filter(l => l.length > 0);
+
+            if (lines.length < 2) {
+                alert("The uploaded CSV file contains no data rows.");
+                return;
+            }
+
+            const headers = parseCSVLine(lines[0]).map(h => h.toLowerCase().replace(/['"]/g, '').trim());
+            
+            let idIdx = headers.findIndex(h => h.includes('student id') || h.includes('id') || h.includes('reg'));
+            let ca1Idx = headers.findIndex(h => h.includes('1st ca') || h.includes('ca1') || h.includes('ca 1'));
+            let ca2Idx = headers.findIndex(h => h.includes('2nd ca') || h.includes('ca2') || h.includes('ca 2'));
+            let examIdx = headers.findIndex(h => h.includes('exam'));
+
+            if (idIdx === -1) idIdx = 0;
+            if (ca1Idx === -1) ca1Idx = 2;
+            if (ca2Idx === -1) ca2Idx = 3;
+            if (examIdx === -1) examIdx = 4;
+
+            let updatedCount = 0;
+
+            for (let i = 1; i < lines.length; i++) {
+                const cols = parseCSVLine(lines[i]);
+                if (cols.length < 3) continue;
+
+                const rawId = cols[idIdx] ? cols[idIdx].replace(/['"]/g, '').trim() : '';
+                const ca1Val = parseFloat(cols[ca1Idx]);
+                const ca2Val = parseFloat(cols[ca2Idx]);
+                const examVal = parseFloat(cols[examIdx]);
+
+                if (rawId) {
+                    const row = document.querySelector(`tr[data-student-id="${CSS.escape(rawId)}"]`) || 
+                                Array.from(document.querySelectorAll('#gradingTableBody tr')).find(r => 
+                                    (r.getAttribute('data-student-id') || '').toLowerCase() === rawId.toLowerCase()
+                                );
+
+                    if (row) {
+                        const ca1Inp = row.querySelector('.ca1');
+                        const ca2Inp = row.querySelector('.ca2');
+                        const examInp = row.querySelector('.exam');
+
+                        if (ca1Inp) ca1Inp.value = isNaN(ca1Val) ? 0 : Math.min(15, Math.max(0, ca1Val));
+                        if (ca2Inp) ca2Inp.value = isNaN(ca2Val) ? 0 : Math.min(15, Math.max(0, ca2Val));
+                        if (examInp) examInp.value = isNaN(examVal) ? 0 : Math.min(70, Math.max(0, examVal));
+
+                        calculateRowScore(ca1Inp);
+                        updatedCount++;
+                    }
+                }
+            }
+
+            event.target.value = '';
+
+            if (updatedCount > 0) {
+                alert(`Successfully imported and matched scores for ${updatedCount} students! Click "Save & Upload Grades" to commit changes.`);
+            } else {
+                alert("No matching Student IDs found in the imported file. Check that the ID column header matches your registered IDs.");
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function parseCSVLine(line) {
+        const result = [];
+        let insideQuote = false;
+        let entry = '';
+
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+            if (char === '"') {
+                insideQuote = !insideQuote;
+            } else if (char === ',' && !insideQuote) {
+                result.push(entry.trim());
+                entry = '';
+            } else {
+                entry += char;
+            }
+        }
+        result.push(entry.trim());
+        return result;
+    }
+</script>
+
+</body>
+</html>

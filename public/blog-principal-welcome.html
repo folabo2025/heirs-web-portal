@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principal's Welcome Message | Heirs of Promise Schools</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="blog.css"> 
+</head>
+<body>
+
+<header class="header">
+    <div class="left">
+        <div class="hamburger" id="menuIcon" onclick="toggleMenu()">☰</div>
+        <div class="logo">HOPS Blog</div>
+    </div>
+    <div class="right">
+        <div class="signup" onclick="window.location.href='index.html'">Back to Home</div>
+    </div>
+</header>
+
+<nav id="sideMenu" class="side-menu">
+    <ul>
+        <li><a href="index.html">🏠 Home</a></li>
+        <li><a href="academics.html">📁 Academics</a></li>
+        <li><a href="admissions.html">📁 Admissions</a></li>
+        <li><a href="subscriptions.html">📺 Subscriptions</a></li>
+        <li><a href="library.html">📁 Library</a></li>
+        <li><a href="about.html">📁 About</a></li>
+        <li><a href="contact.html">📁 Contact</a></li>
+        <li><a href="portal.html" class="portal-btn">🚀 Portal</a></li>
+    </ul>
+</nav>
+
+<div id="overlay" class="overlay"></div>
+
+<div class="blog-layout-container">
+    <main class="blog-main-content">
+        <article class="post-container">
+            <div class="post-header">
+                <span class="category-tag">Leadership & Administration</span>
+                <h1>A Welcome Message from the Principal: Vision for the New Academic Term</h1>
+                <p class="post-meta">Published on January 12, 2026 • By Office of the Principal • 4 min read</p>
+                <img src="images/principal_portrait.jpg" alt="Principal Portrait" class="featured-image">
+            </div>
+
+            <div class="post-content">
+                <p class="lead-paragraph">
+                    Welcome to a vibrant new academic term at Heirs of Promise Schools (HOPS). As we open our doors to another season of discovery, innovation, and growth, our commitment to nurturing academic excellence, strong character, and modern technical literacy remains steadfast.
+                </p>
+
+                <p>
+                    Every new term offers a fresh canvas. At HOPS, we view education as a holistically transformative journey. Our vision for this session centers on deepening practical engagement across science, technology, and humanities, while strengthening character development and leadership skills in every learner.
+                </p>
+
+                <h3>1. Elevating Academic Rigor & Practical STEM Education</h3>
+                <p>
+                    This term, we are expanding our practical teaching modules across senior and junior secondary levels. From advanced computer laboratory sessions to interactive laboratory experiments in Physics, Chemistry, and Biology, our curriculum is designed to move beyond theory. We are equipping our learners with real-world technical competency and critical problem-solving capabilities.
+                </p>
+
+                <blockquote>
+                    "True education does not merely train the mind to memorize facts; it inspires character, integrity, and the capability to solve real human problems."
+                </blockquote>
+
+                <h3>2. Character Formation & Student Mentorship</h3>
+                <p>
+                    Academic capability without character falls short of complete leadership. Our faculty is dedicated to fostering empathy, discipline, resilience, and ethical leadership in our students. Through structured mentorship programs and collaborative school projects, we guide each student to discover their individual strengths and model high integrity in all endeavors.
+                </p>
+
+                <h3>3. A Shared Partnership with Parents</h3>
+                <p>
+                    We recognize that true educational progress thrives on a strong home-school connection. We invite our esteemed parents and guardians to partner closely with us throughout this term by keeping communication channels open, attending PTA sessions, and supporting study routines at home.
+                </p>
+
+                <p>
+                    I welcome all returning and new students back to campus. Let us approach this term with energy, purpose, and determination to achieve extraordinary milestones together.
+                </p>
+
+                <div class="post-tags">
+                    <span>#PrincipalWelcome</span> <span>#HOPSLeadership</span> <span>#AcademicVision</span> <span>#CharacterAndExcellence</span>
+                </div>
+            </div>
+
+            <section class="comment-section">
+                <h3 class="comment-count">0 Comments</h3>
+                
+                <div class="comment-input-wrapper">
+                    <form class="comment-form" id="mainCommentForm">
+                        <input type="text" id="userName" placeholder="Your Name" required class="comment-name-input">
+                        
+                        <div id="hiddenFields" class="hidden-comment-fields">
+                            <textarea id="userComment" placeholder="Add a comment..." rows="1" required class="comment-text-input"></textarea>
+                            <div class="form-actions">
+                                <button type="button" class="cancel-btn" onclick="collapseForm()">Cancel</button>
+                                <button type="submit" class="submit-comment">Comment</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="comments-display">
+                    <!-- Comments render here dynamically -->
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <aside class="blog-sidebar">
+        <h3>Upcoming & Related</h3>
+        <div class="side-card" onclick="window.location.href='blog-waec-bece-prep.html'">
+            <img src="images/waec_bece_prep.jpg" alt="WAEC Prep">
+            <div class="side-card-info">
+                <h4>WAEC & BECE Prep Guide</h4>
+                <p>Academics • Read Now</p>
+            </div>
+        </div>
+        <div class="side-card" onclick="window.location.href='blog-coding-workshop.html'">
+            <img src="images/ict_lab_showcase.jpg" alt="Coding Workshop">
+            <div class="side-card-info">
+                <h4>Coding & Tech Showcase</h4>
+                <p>Innovation • Read Now</p>
+            </div>
+        </div>
+        <div class="side-card" onclick="window.location.href='blog-pta-meeting-highlights.html'">
+            <img src="images/pta_meeting_highlights.jpg" alt="PTA Highlights">
+            <div class="side-card-info">
+                <h4>PTA Meeting Resolutions</h4>
+                <p>Community • Read Now</p>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2026 Heirs of Promise Schools. All Rights Reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

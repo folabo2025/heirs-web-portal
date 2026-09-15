@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard | HOPS Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        .user-profile { position: relative; display: inline-block; }
+        .avatar-placeholder {
+            width: 45px; height: 45px; border-radius: 50%;
+            background-color: #1a237e; color: #ffffff; font-size: 18px; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid #e0e0e0; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-transform: uppercase; cursor: pointer; transition: transform 0.15s ease;
+        }
+        .avatar-placeholder:hover { transform: scale(1.05); }
+        .profile-dropdown {
+            display: none; position: absolute; right: 0; top: 55px;
+            background-color: #ffffff; min-width: 160px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); border-radius: 8px;
+            overflow: hidden; z-index: 1000; border: 1px solid #e0e0e0;
+        }
+        .profile-dropdown.show { display: block; }
+        .dropdown-item {
+            display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+            color: #333; font-weight: 600; font-size: 14px; text-decoration: none; cursor: pointer;
+        }
+        .dropdown-item:hover { background-color: #f4f6f9; }
+        .dropdown-item.logout-item { color: #d32f2f; border-top: 1px solid #f0f0f0; }
+        .dropdown-item.logout-item:hover { background-color: #ffebee; }
+        
+        .grade-upload-btn {
+            background-color: #1a237e;
+            color: #ffffff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .grade-upload-btn:hover {
+            background-color: #0d1259;
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+
+<div class="dashboard-wrapper">
+    <aside class="dash-sidebar">
+        <div class="dash-logo">HOPS Staff</div>
+        <nav>
+            <a href="staff-dashboard.html" class="active">📊 <span>Overview</span></a>
+            <a href="student-records.html">👨‍🎓 <span>Student Records</span></a>
+            <a href="grading-sheet.html">📝 <span>Grading System</span></a>
+            <a href="lesson-planner.html">📅 <span>Lesson Planner</span></a>
+            <a href="parent-messages.html">💬 <span>Parent Messages</span></a>
+            <a href="javascript:void(0)" class="logout" onclick="performLogout()">🚪 <span>Logout</span></a>
+        </nav>
+    </aside>
+
+    <main class="dash-main">
+        <header class="dash-header">
+            <div class="header-text">
+                <h2>Good Morning, <span id="staffNameDisplay" class="student-name">STAFF</span>! 👋</h2>
+                <p>Manage your classes and upload academic reports.</p>
+            </div>
+
+            <div class="user-profile">
+                <div id="staffInitialDisplay" class="avatar-placeholder" onclick="toggleProfileDropdown(event)">ST</div>
+                <div id="profileDropdown" class="profile-dropdown">
+                    <a class="dropdown-item" onclick="alert('Viewing Profile')">👤 Profile</a>
+                    <a class="dropdown-item logout-item" onclick="performLogout()">🚪 Log Out</a>
+                </div>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card blue">
+                <h3>My Classes</h3>
+                <p class="stat-val">6</p>
+                <small>JSS 1 to SS 3</small>
+            </div>
+            <div class="stat-card green">
+                <h3>Papers Marked</h3>
+                <p class="stat-val">85%</p>
+                <small>Term 2 Mid-term</small>
+            </div>
+            <div class="stat-card orange">
+                <h3>Action Items</h3>
+                <p class="stat-val">12</p>
+                <small>Pending Attendance</small>
+            </div>
+        </section>
+
+        <div class="dash-content-grid">
+            <div class="dash-card">
+                <h3>📤 Quick Grade Upload</h3>
+                <form class="portal-form" style="padding: 0; box-shadow: none;" onsubmit="handleGradeUploadRedirect(event)">
+                    <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                        
+                        <!-- Class Select -->
+                        <select id="classSelect" class="input-group" style="padding: 10px; border-radius: 8px;" required>
+                            <option value="">Select Class</option>
+                            <optgroup label="Junior Secondary">
+                                <option value="JSS 1">JSS 1</option>
+                                <option value="JSS 2">JSS 2</option>
+                                <option value="JSS 3">JSS 3</option>
+                            </optgroup>
+                            <optgroup label="Senior Secondary">
+                                <option value="SS 1">SS 1</option>
+                                <option value="SS 2">SS 2</option>
+                                <option value="SS 3">SS 3</option>
+                            </optgroup>
+                        </select>
+
+                        <!-- Subject Select -->
+                        <select id="subjectSelect" class="input-group" style="padding: 10px; border-radius: 8px;" required>
+                            <option value="">Select Subject</option>
+                            
+                            <optgroup label="ICT & Technology">
+                                <option value="Coding">Coding</option>
+                                <option value="Computer Studies">Computer Studies</option>
+                                <option value="Data Processing">Data Processing</option>
+                                <option value="Robotics & AI">Robotics & AI</option>
+                            </optgroup>
+
+                            <optgroup label="Core / General Subjects">
+                                <option value="English Language">English Language</option>
+                                <option value="Mathematics">Mathematics</option>
+                                <option value="Civic Education">Civic Education</option>
+                                <option value="General Mathematics">General Mathematics</option>
+                            </optgroup>
+
+                            <optgroup label="Junior Secondary Subjects">
+                                <option value="Basic Science">Basic Science</option>
+                                <option value="Basic Technology">Basic Technology</option>
+                                <option value="Business Studies">Business Studies</option>
+                                <option value="Cultural and Creative Arts (CCA)">Cultural and Creative Arts (CCA)</option>
+                                <option value="Christian Religious Studies (CRS)">Christian Religious Studies (CRS)</option>
+                                <option value="Islamic Religious Studies (IRS)">Islamic Religious Studies (IRS)</option>
+                                <option value="Home Economics">Home Economics</option>
+                                <option value="Agricultural Science (JSS)">Agricultural Science</option>
+                                <option value="Social Studies">Social Studies</option>
+                                <option value="Physical and Health Education (PHE)">Physical and Health Education (PHE)</option>
+                                <option value="French Language (JSS)">French Language</option>
+                            </optgroup>
+
+                            <optgroup label="Senior Secondary Science">
+                                <option value="Physics">Physics</option>
+                                <option value="Chemistry">Chemistry</option>
+                                <option value="Biology">Biology</option>
+                                <option value="Further Mathematics">Further Mathematics</option>
+                                <option value="Agricultural Science">Agricultural Science</option>
+                                <option value="Technical Drawing">Technical Drawing</option>
+                                <option value="Physical Education">Physical Education</option>
+                                <option value="Health Education">Health Education</option>
+                            </optgroup>
+
+                            <optgroup label="Senior Secondary Commercial">
+                                <option value="Commerce">Commerce</option>
+                                <option value="Financial Accounting">Financial Accounting</option>
+                                <option value="Economics">Economics</option>
+                                <option value="Office Practice">Office Practice</option>
+                                <option value="Bookkeeping">Bookkeeping</option>
+                                <option value="Store Management">Store Management</option>
+                                <option value="Insurance">Insurance</option>
+                            </optgroup>
+
+                            <optgroup label="Senior Secondary Arts & Humanities">
+                                <option value="Literature-in-English">Literature-in-English</option>
+                                <option value="Government">Government</option>
+                                <option value="History">History</option>
+                                <option value="Christian Religious Knowledge (CRK)">Christian Religious Knowledge (CRK)</option>
+                                <option value="Islamic Religious Knowledge (IRK)">Islamic Religious Knowledge (IRK)</option>
+                                <option value="Yoruba Language">Yoruba Language</option>
+                                <option value="Hausa Language">Hausa Language</option>
+                                <option value="Igbo Language">Igbo Language</option>
+                                <option value="French Language">French Language</option>
+                                <option value="Visual Arts">Visual Arts</option>
+                                <option value="Music">Music</option>
+                            </optgroup>
+                        </select>
+
+                    </div>
+                    <button type="submit" class="grade-upload-btn">Open Grade Sheet</button>
+                </form>
+            </div>
+
+            <div class="dash-card">
+                <h3>🔔 Staff Notices</h3>
+                <div class="assignment-list">
+                    <div class="assignment-item">
+                        <p><strong>Staff Meeting:</strong> Friday 2 PM</p>
+                        <span style="color: var(--accent-blue);">Board Room</span>
+                    </div>
+                    <hr>
+                    <div class="assignment-item">
+                        <p><strong>Result Portal:</strong> Closing Sunday</p>
+                        <span style="color: red;">Urgent</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Hydrate active user session details
+        const storedUser = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser');
+        if (storedUser) {
+            try {
+                const user = JSON.parse(storedUser);
+                if (user && user.name) {
+                    document.getElementById('staffNameDisplay').innerText = user.name.toUpperCase();
+                    
+                    // Generate user initials
+                    const parts = user.name.trim().split(' ');
+                    let initials = 'ST';
+                    if (parts.length >= 2) {
+                        initials = (parts[0][0] + parts[1][0]).toUpperCase();
+                    } else if (parts.length === 1 && parts[0].length > 0) {
+                        initials = parts[0].substring(0, 2).toUpperCase();
+                    }
+                    document.getElementById('staffInitialDisplay').innerText = initials;
+                }
+            } catch (e) {
+                console.error('Failed to parse user session', e);
+            }
+        }
+    });
+
+    function toggleProfileDropdown(event) {
+        event.stopPropagation();
+        document.getElementById('profileDropdown').classList.toggle('show');
+    }
+
+    function performLogout() {
+        sessionStorage.removeItem('currentUser');
+        localStorage.removeItem('currentUser');
+        window.location.href = 'portal.html';
+    }
+
+    function handleGradeUploadRedirect(event) {
+        event.preventDefault();
+        const className = document.getElementById('classSelect').value;
+        const subjectName = document.getElementById('subjectSelect').value;
+
+        if (!className || !subjectName) {
+            alert('Please select both a Class and a Subject.');
+            return;
+        }
+        window.location.href = `grading-sheet.html?class=${encodeURIComponent(className)}&subject=${encodeURIComponent(subjectName)}`;
+    }
+
+    document.addEventListener('click', () => {
+        const dropdown = document.getElementById('profileDropdown');
+        if (dropdown && dropdown.classList.contains('show')) dropdown.classList.remove('show');
+    });
+</script>
+
+</body>
+</html>

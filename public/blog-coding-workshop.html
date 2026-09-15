@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding & Web Development Showcase | Heirs of Promise Schools</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="blog.css"> 
+</head>
+<body>
+
+<header class="header">
+    <div class="left">
+        <div class="hamburger" id="menuIcon" onclick="toggleMenu()">☰</div>
+        <div class="logo">HOPS Blog</div>
+    </div>
+    <div class="right">
+        <div class="signup" onclick="window.location.href='index.html'">Back to Home</div>
+    </div>
+</header>
+
+<nav id="sideMenu" class="side-menu">
+    <ul>
+        <li><a href="index.html">🏠 Home</a></li>
+        <li><a href="academics.html">📁 Academics</a></li>
+        <li><a href="admissions.html">📁 Admissions</a></li>
+        <li><a href="subscriptions.html">📺 Subscriptions</a></li>
+        <li><a href="library.html">📁 Library</a></li>
+        <li><a href="about.html">📁 About</a></li>
+        <li><a href="contact.html">📁 Contact</a></li>
+        <li><a href="portal.html" class="portal-btn">🚀 Portal</a></li>
+    </ul>
+</nav>
+
+<div id="overlay" class="overlay"></div>
+
+<div class="blog-layout-container">
+    <main class="blog-main-content">
+        <article class="post-container">
+            <div class="post-header">
+                <span class="category-tag">Technology & Innovation</span>
+                <h1>Inside Our Coding & Web Development Workshop: Student Projects Showcase</h1>
+                <p class="post-meta">Published on February 18, 2026 • By Department of Computer Science • 5 min read</p>
+                <img src="images/ict_lab_showcase.jpg" alt="Student Coding Workshop" class="featured-image">
+            </div>
+
+            <div class="post-content">
+                <p class="lead-paragraph">
+                    Practical technology education is at the core of our modern curriculum at Heirs of Promise Schools. During our recent intensive Web Development Workshop, secondary students transformed abstract coding concepts into functional software solutions and responsive web interfaces.
+                </p>
+
+                <p>
+                    Guided by our ICT faculty, students learned fundamental and intermediate web development concepts using standard technologies: HTML5 structure, CSS3 flexbox/grid layouts, JavaScript DOM manipulation, and relational database logic. The workshop was designed to foster independent computational thinking and collaborative engineering practices.
+                </p>
+
+                <h3>1. Hands-On Frontend Development & Responsive UI</h3>
+                <p>
+                    Students began by building semantic, accessible structures for web applications. Working directly in code editors, they gained mastery over CSS styling properties, color harmony, typography, and responsive media queries. Each student designed adaptive user interfaces capable of rendering seamlessly across desktop screens and mobile devices.
+                </p>
+
+                <blockquote>
+                    "We don't just teach students how to consume digital media; we empower them to write code, design algorithms, and build digital products."
+                </blockquote>
+
+                <h3>2. Logic, Interactive Scripts & Local Databases</h3>
+                <p>
+                    Moving beyond static visual components, senior students integrated dynamic JavaScript features. Project assignments included building interactive calculators, dynamic grade computation engines, client-side data forms, and custom user portals. Advanced modules introduced students to structured database concepts using SQLite and server-side API integration principles.
+                </p>
+
+                <h3>3. Project Presentation & Code Review</h3>
+                <p>
+                    The workshop concluded with a live project exhibition where student teams presented their built applications to peers and faculty members. Presentations were evaluated on code cleanliness, functionality, UI design, and problem-solving ingenuity. The showcase highlighted the remarkable potential of young developers when provided with structured guidance and adequate lab infrastructure.
+                </p>
+
+                <p>
+                    We remain committed to upgrading our ICT facilities and providing continuous coding mentorship to ensure every HOPS learner is prepared for the digital future.
+                </p>
+
+                <div class="post-tags">
+                    <span>#CodingAtHOPS</span> <span>#WebDevelopment</span> <span>#STEMEducation</span> <span>#JavaScript</span> <span>#FutureTech</span>
+                </div>
+            </div>
+
+            <section class="comment-section">
+                <h3 class="comment-count">0 Comments</h3>
+                
+                <div class="comment-input-wrapper">
+                    <form class="comment-form" id="mainCommentForm">
+                        <input type="text" id="userName" placeholder="Your Name" required class="comment-name-input">
+                        
+                        <div id="hiddenFields" class="hidden-comment-fields">
+                            <textarea id="userComment" placeholder="Add a comment..." rows="1" required class="comment-text-input"></textarea>
+                            <div class="form-actions">
+                                <button type="button" class="cancel-btn" onclick="collapseForm()">Cancel</button>
+                                <button type="submit" class="submit-comment">Comment</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="comments-display">
+                    <!-- Comments render here dynamically -->
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <aside class="blog-sidebar">
+        <h3>Upcoming & Related</h3>
+        <div class="side-card" onclick="window.location.href='blog-waec-bece-prep.html'">
+            <img src="images/waec_bece_prep.jpg" alt="WAEC Prep">
+            <div class="side-card-info">
+                <h4>WAEC & BECE Prep Guide</h4>
+                <p>Academics • Read Now</p>
+            </div>
+        </div>
+        <div class="side-card" onclick="window.location.href='blog-principal-welcome.html'">
+            <img src="images/principal_portrait.jpg" alt="Principal Welcome">
+            <div class="side-card-info">
+                <h4>Principal's Welcome Vision</h4>
+                <p>Leadership • Read Now</p>
+            </div>
+        </div>
+        <div class="side-card" onclick="window.location.href='blog-student-spotlight.html'">
+            <img src="images/student_spotlight.jpg" alt="Student Spotlight">
+            <div class="side-card-info">
+                <h4>Student of the Month</h4>
+                <p>Excellence • Read Now</p>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2026 Heirs of Promise Schools. All Rights Reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

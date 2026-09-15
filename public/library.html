@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Library | Heirs of Promise Schools</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="library.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="left">
+        <div class="hamburger" id="menuIcon" onclick="toggleMenu()">☰</div>
+        <a href="index.html" class="logo">Heirs of Promise Schools</a>
+    </div>
+    <div class="center">
+        <input type="text" placeholder="Search books, past questions...">
+        <button type="submit">🔍</button>
+    </div>
+    <div class="right">
+        <div class="signup" onclick="window.location.href='apply.html'">Apply Now</div>
+    </div>
+</header>
+
+<nav id="sideMenu" class="side-menu">
+    <ul>
+        <li><a href="index.html">🏠 Home</a></li>
+        <li><a href="academics.html">📁 Academics</a></li>
+        <li><a href="admissions.html">📁 Admissions</a></li>
+        <li><a href="subscriptions.html">📺 Subscriptions</a></li>
+        <li><a href="library.html">📁 Library</a></li>
+        <li><a href="about.html">📁 About</a></li>
+        <li><a href="contact.html">📁 Contact</a></li>
+        <li><a href="portal.html" class="portal-btn">🚀 Portal</a></li>
+    </ul>
+</nav>
+
+<div id="overlay" class="overlay"></div>
+
+<section class="library-banner">
+    <h1>Knowledge at Your Fingertips</h1>
+    <p>Download textbooks, past questions, and curriculum guides.</p>
+</section>
+
+<div class="library-container">
+    <aside class="library-filters">
+        <h3>Categories</h3>
+        <ul>
+            <li><a href="#" class="active">All Resources</a></li>
+            <li><a href="#">Mathematics</a></li>
+            <li><a href="#">Sciences</a></li>
+            <li><a href="#">Arts & Humanities</a></li>
+            <li><a href="#">Past Questions</a></li>
+            <li><a href="#">School Magazine</a></li>
+        </ul>
+    </aside>
+
+    <main class="resources-grid">
+        <div class="resource-card">
+            <div class="file-icon">📕</div>
+            <div class="resource-info">
+                <h4>Mathematics JS3</h4>
+                <p>Full Textbook • PDF</p>
+                <a href="#" download class="download-btn">📥 Download</a>
+            </div>
+        </div>
+
+        <div class="resource-card">
+            <div class="file-icon">📘</div>
+            <div class="resource-info">
+                <h4>Physics SS1-3</h4>
+                <p>Formula Handbook • PDF</p>
+                <a href="#" download class="download-btn">📥 Download</a>
+            </div>
+        </div>
+
+        <div class="resource-card">
+            <div class="file-icon">📝</div>
+            <div class="resource-info">
+                <h4>WAEC Past Questions</h4>
+                <p>2025 General Maths • PDF</p>
+                <a href="#" download class="download-btn">📥 Download</a>
+            </div>
+        </div>
+
+        <div class="resource-card">
+            <div class="file-icon">📙</div>
+            <div class="resource-info">
+                <h4>English Grammar</h4>
+                <p>Common Mistakes Guide • PDF</p>
+                <a href="#" download class="download-btn">📥 Download</a>
+            </div>
+        </div>
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="footer-bottom">
+        <p>&copy; 2026 Heirs of Promise Schools. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

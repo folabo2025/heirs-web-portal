@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | HOPS Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* PROFILE AVATAR CONTAINER & DROPDOWN STYLES */
+        .user-profile {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-avatar-circle {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: #1a237e;
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            user-select: none;
+        }
+
+        .user-avatar-circle:hover, .user-avatar-circle:focus {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            outline: none;
+        }
+
+        /* DROPDOWN MENU */
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 55px;
+            background-color: #ffffff;
+            min-width: 160px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1000;
+            border: 1px solid #e0e0e0;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: #333333;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            width: 100%;
+            border: none;
+            background: none;
+            text-align: left;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f4f6f9;
+        }
+
+        .dropdown-item.logout-item {
+            color: #d32f2f;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item.logout-item:hover {
+            background-color: #ffebee;
+        }
+
+        /* MODAL OVERLAY & CARDS */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: #1a237e;
+            font-size: 18px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .profile-detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed #f0f0f0;
+            font-size: 14px;
+        }
+
+        .profile-detail-item span:first-child {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .profile-detail-item span:last-child {
+            color: #1a237e;
+            font-weight: 700;
+        }
+
+        /* SUBJECT REGISTRATION FORM STYLES */
+        .subject-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .subject-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fafafa;
+            transition: border-color 0.2s;
+        }
+
+        .subject-option:hover {
+            border-color: #1a237e;
+            background-color: #f4f6f9;
+        }
+
+        .subject-option label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .btn-primary {
+            background-color: #1a237e;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #0d1357;
+        }
+
+        /* DYNAMIC SECTION TABS */
+        .dash-section-tab {
+            display: none;
+        }
+
+        .dash-section-tab.active {
+            display: block;
+        }
+
+        /* GRADE BADGES */
+        .grade-badge {
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .badge-a { color: #2e7d32; background-color: #e8f5e9; }
+        .badge-b { color: #1565c0; background-color: #e3f2fd; }
+        .badge-c { color: #f57f17; background-color: #fffde7; }
+        .badge-d { color: #e65100; background-color: #fff3e0; }
+        .badge-e { color: #ef6c00; background-color: #fff8e1; }
+        .badge-f { color: #c62828; background-color: #ffebee; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+
+<div class="dashboard-wrapper">
+    <aside class="dash-sidebar">
+        <div class="dash-logo">HOPS Portal</div>
+        <nav>
+            <a href="#" id="nav-overview" class="active" onclick="switchSidebarTab(event, 'tab-overview')">📊 <span>Overview</span></a>
+            <a href="#" id="nav-courses" onclick="switchSidebarTab(event, 'tab-courses')">📚 <span>My Courses</span></a>
+            <a href="#" id="nav-assignments" onclick="switchSidebarTab(event, 'tab-assignments')">📝 <span>Assignments</span></a>
+            <a href="#" id="nav-timetable" onclick="switchSidebarTab(event, 'tab-timetable')">🗓️ <span>Timetable</span></a>
+            <a href="#" id="nav-grades" onclick="switchSidebarTab(event, 'tab-grades')">📈 <span>Grades</span></a>
+            <a href="#" class="logout" onclick="performLogout(event)">🚪 <span>Logout</span></a>
+        </nav>
+    </aside>
+
+    <main class="dash-main">
+        <header class="dash-header">
+            <div class="header-text">
+                <h2>Welcome back, <span id="studentNameDisplay" class="student-name">TOSANWUNMI IFEOLUWA</span>! 👋</h2>
+                <p>Check your latest progress and upcoming tasks.</p>
+            </div>
+            
+            <div class="user-profile">
+                <div id="userInitialDisplay" class="user-avatar-circle" tabindex="0" onclick="toggleProfileDropdown(event)" onkeydown="if(event.key==='Enter'||event.key===' ') toggleProfileDropdown(event)" title="Click to open menu">T</div>
+                <div id="profileDropdown" class="profile-dropdown">
+                    <button type="button" class="dropdown-item" onclick="openProfileModal(event)">👤 Profile</button>
+                    <button type="button" class="dropdown-item logout-item" onclick="performLogout(event)">🚪 Log Out</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- TAB 1: OVERVIEW -->
+        <div id="tab-overview" class="dash-section-tab active">
+            <section class="stats-grid">
+                <div class="stat-card blue">
+                    <h3>Registered Subjects</h3>
+                    <p class="stat-val" id="registeredCountDisplay">0</p>
+                    <small>Enrolled Courses</small>
+                </div>
+                <div class="stat-card green">
+                    <h3>Attendance</h3>
+                    <p class="stat-val">98%</p>
+                    <small>Excellent Standing</small>
+                </div>
+                <div class="stat-card orange">
+                    <h3>Pending Tasks</h3>
+                    <p class="stat-val">3</p>
+                    <small>Next due: Tomorrow</small>
+                </div>
+            </section>
+
+            <div class="dash-content-grid">
+                <div class="dash-card">
+                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h3>🗓️ Today's Timetable</h3>
+                    </div>
+                    <table class="dash-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Subject</th>
+                                <th>Room</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>08:00 AM</td>
+                                <td><strong>Mathematics</strong></td>
+                                <td>Block A-2</td>
+                            </tr>
+                            <tr>
+                                <td>10:30 AM</td>
+                                <td><strong>Computer Science / Coding</strong></td>
+                                <td>Lab 1</td>
+                            </tr>
+                            <tr>
+                                <td>12:00 PM</td>
+                                <td><strong>English Lang.</strong></td>
+                                <td>Block C-1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="dash-card">
+                    <h3>📝 Recent Assignments</h3>
+                    <div class="assignment-list">
+                        <div class="assignment-item">
+                            <p><strong>Physics:</strong> Thermodynamics Quiz</p>
+                            <span>Due: Tomorrow</span>
+                        </div>
+                        <hr>
+                        <div class="assignment-item">
+                            <p><strong>History:</strong> Colonial Era Essay</p>
+                            <span>Due: Friday</span>
+                        </div>
+                        <hr>
+                        <div class="assignment-item">
+                            <p><strong>Biology:</strong> Cell Structure Lab</p>
+                            <span>Due: Monday</span>
+                        </div>
+                    </div>
+                    <button class="view-all-btn" onclick="switchSidebarTab(event, 'tab-assignments')">View All Tasks</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: MY COURSES & REGISTRATION -->
+        <div id="tab-courses" class="dash-section-tab">
+            <div class="dash-card" style="padding: 25px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <h3 style="color: #1a237e; margin: 0;">📚 Enrolled Courses</h3>
+                        <p style="margin: 5px 0 0 0; color: #666; font-size: 14px;">View and register your subjects for this academic term.</p>
+                    </div>
+                    <button type="button" class="btn-primary" onclick="openEnrollmentModal()">➕ Register New Subjects</button>
+                </div>
+
+                <table class="dash-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Subject Name</th>
+                            <th>Course Code</th>
+                            <th>Department / Instructor</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="enrolledSubjectsTableBody">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #666; padding: 20px;">
+                                Loading enrolled subjects...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 3: ASSIGNMENTS -->
+        <div id="tab-assignments" class="dash-section-tab">
+            <div class="dash-card" style="padding: 25px;">
+                <h3 style="color: #1a237e; margin-bottom: 15px;">📝 Pending & Recent Assignments</h3>
+                <div class="assignment-list">
+                    <div class="assignment-item">
+                        <p><strong>Coding Practical:</strong> Build an Interactive Form Validation Module</p>
+                        <span style="color: #d32f2f; font-weight: bold;">Due: Tomorrow</span>
+                    </div>
+                    <hr>
+                    <div class="assignment-item">
+                        <p><strong>Physics:</strong> Thermodynamics Quiz</p>
+                        <span>Due: Tomorrow</span>
+                    </div>
+                    <hr>
+                    <div class="assignment-item">
+                        <p><strong>History:</strong> Colonial Era Essay</p>
+                        <span>Due: Friday</span>
+                    </div>
+                    <hr>
+                    <div class="assignment-item">
+                        <p><strong>Biology:</strong> Cell Structure Lab</p>
+                        <span>Due: Monday</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: TIMETABLE -->
+        <div id="tab-timetable" class="dash-section-tab">
+            <div class="dash-card" style="padding: 25px;">
+                <h3 style="color: #1a237e; margin-bottom: 15px;">🗓️ Weekly Timetable</h3>
+                <table class="dash-table">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>08:00 AM - 10:00 AM</th>
+                            <th>10:30 AM - 12:00 PM</th>
+                            <th>12:00 PM - 02:00 PM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Monday</strong></td>
+                            <td>Mathematics</td>
+                            <td>Coding / Robotics</td>
+                            <td>English Language</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tuesday</strong></td>
+                            <td>Physics</td>
+                            <td>Computer Science</td>
+                            <td>Chemistry</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Wednesday</strong></td>
+                            <td>Biology</td>
+                            <td>Coding Practical Lab</td>
+                            <td>Data Processing</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Thursday</strong></td>
+                            <td>Mathematics</td>
+                            <td>Civic Education</td>
+                            <td>English Literature</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Friday</strong></td>
+                            <td>Coding Project Review</td>
+                            <td>Physical Education</td>
+                            <td>Club & Societies</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 5: GRADES -->
+        <div id="tab-grades" class="dash-section-tab">
+            <div class="dash-card" style="padding: 25px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="color: #1a237e; margin: 0;">📈 Academic Grades & Score Sheet</h3>
+                    <button type="button" onclick="loadStudentGradesFromAPI()" style="background-color: #1a237e; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600;">🔄 Refresh Scores</button>
+                </div>
+                <table class="dash-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Subject</th>
+                            <th>1st CA (15)</th>
+                            <th>2nd CA (15)</th>
+                            <th>Exam (70)</th>
+                            <th>Total (100)</th>
+                            <th>Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentGradesTableBody">
+                        <tr>
+                            <td colspan="7" style="text-align: center; color: #666; padding: 20px;">
+                                Loading academic report cards...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- SUBJECT ENROLLMENT MODAL -->
+<div id="enrollmentModal" class="modal-overlay" onclick="closeEnrollmentModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3>Subject Registration / Enrollment</h3>
+            <button type="button" class="close-btn" onclick="closeEnrollmentModal()">&times;</button>
+        </div>
+        <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Select the subjects you are taking this term and save your registration.</p>
+        
+        <form id="enrollmentForm" onsubmit="handleSubjectRegistration(event)">
+            <div class="subject-checklist" id="availableSubjectsContainer">
+                <!-- Checkboxes dynamically rendered here -->
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button type="button" onclick="closeEnrollmentModal()" style="padding: 10px 16px; background: #e0e0e0; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">Cancel</button>
+                <button type="submit" class="btn-primary">Save Enrolled Subjects</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- STUDENT PROFILE MODAL -->
+<div id="profileModal" class="modal-overlay" onclick="closeProfileModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3>Student Profile</h3>
+            <button type="button" class="close-btn" onclick="closeProfileModal()">&times;</button>
+        </div>
+        <div class="profile-detail-item">
+            <span>Student ID:</span>
+            <span id="modalStudentId">HOPS/ST/041</span>
+        </div>
+        <div class="profile-detail-item">
+            <span>Full Name:</span>
+            <span id="modalStudentName">TOSANWUNMI IFEOLUWA</span>
+        </div>
+        <div class="profile-detail-item">
+            <span>Class:</span>
+            <span id="modalStudentClass">Senior Secondary</span>
+        </div>
+        <div class="profile-detail-item">
+            <span>Status:</span>
+            <span style="color: #2e7d32;">Active</span>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4>HOPS Schools</h4>
+            <p>Excellence in education, character, and leadership.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <a href="about.html">About Us</a>
+            <a href="portal.html">Student Portal</a>
+        </div>
+        <div class="footer-col">
+            <h4>Support</h4>
+            <a href="contact.html">Help Center</a>
+        </div>
+        <div class="footer-col">
+            <h4>Follow Us</h4>
+            <div class="social-icons">
+                <span>FB</span> <span>TW</span> <span>IG</span>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Heirs of Promise Schools. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+    let loggedInStudentData = null;
+
+    // MASTER LIST OF AVAILABLE SCHOOL SUBJECTS
+    const ALL_AVAILABLE_SUBJECTS = [
+        { code: 'COD201', name: 'Coding & Web Development', dept: 'ICT Department' },
+        { code: 'ICT202', name: 'Computer Science / Data Processing', dept: 'ICT Department' },
+        { code: 'MTH201', name: 'Mathematics', dept: 'Mathematics Dept' },
+        { code: 'ENG201', name: 'English Language', dept: 'Languages Dept' },
+        { code: 'PHY201', name: 'Physics', dept: 'Science Department' },
+        { code: 'CHM201', name: 'Chemistry', dept: 'Science Department' },
+        { code: 'BIO201', name: 'Biology', dept: 'Science Department' },
+        { code: 'CIV201', name: 'Civic Education', dept: 'Humanities Dept' }
+    ];
+
+    function toggleProfileDropdown(event) {
+        if (event) event.stopPropagation();
+        const dropdown = document.getElementById('profileDropdown');
+        if (dropdown) dropdown.classList.toggle('show');
+    }
+
+    function openProfileModal(event) {
+        if (event) event.stopPropagation();
+        const dropdown = document.getElementById('profileDropdown');
+        if (dropdown) dropdown.classList.remove('show');
+        document.getElementById('profileModal').classList.add('show');
+    }
+
+    function closeProfileModal(event) {
+        document.getElementById('profileModal').classList.remove('show');
+    }
+
+    function openEnrollmentModal() {
+        renderAvailableSubjectsChecklist();
+        document.getElementById('enrollmentModal').classList.add('show');
+    }
+
+    function closeEnrollmentModal(event) {
+        document.getElementById('enrollmentModal').classList.remove('show');
+    }
+
+    function performLogout(event) {
+        if (event) event.preventDefault();
+        sessionStorage.removeItem('currentUser');
+        localStorage.removeItem('currentUser');
+        window.location.href = 'index.html';
+    }
+
+    function switchSidebarTab(event, tabId) {
+        if (event) event.preventDefault();
+        
+        document.querySelectorAll('.dash-sidebar nav a').forEach(link => {
+            link.classList.remove('active');
+        });
+
+        document.querySelectorAll('.dash-section-tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+
+        if (event && event.currentTarget) {
+            event.currentTarget.classList.add('active');
+        } else {
+            const navMap = {
+                'tab-overview': 'nav-overview',
+                'tab-courses': 'nav-courses',
+                'tab-assignments': 'nav-assignments',
+                'tab-timetable': 'nav-timetable',
+                'tab-grades': 'nav-grades'
+            };
+            const navElem = document.getElementById(navMap[tabId]);
+            if (navElem) navElem.classList.add('active');
+        }
+
+        const targetTab = document.getElementById(tabId);
+        if (targetTab) {
+            targetTab.classList.add('active');
+        }
+
+        if (tabId === 'tab-grades') {
+            loadStudentGradesFromAPI();
+        }
+    }
+
+    function getBadgeClass(grade) {
+        switch ((grade || '').toUpperCase()) {
+            case 'A': return 'badge-a';
+            case 'B': return 'badge-b';
+            case 'C': return 'badge-c';
+            case 'D': return 'badge-d';
+            case 'E': return 'badge-e';
+            default: return 'badge-f';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const rawUser = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser');
+            if (rawUser) {
+                loggedInStudentData = JSON.parse(rawUser);
+            }
+        } catch (e) {
+            console.warn('Session parse error.');
+        }
+
+        if (!loggedInStudentData) {
+            loggedInStudentData = {
+                id: 'HOPS/ST/041',
+                student_id: 'HOPS/ST/041',
+                name: 'TOSANWUNMI IFEOLUWA',
+                className: 'Senior Secondary',
+                enrolledSubjects: ['COD201', 'ICT202', 'MTH201', 'ENG201']
+            };
+        }
+
+        const studentName = loggedInStudentData.name || loggedInStudentData.full_name || 'TOSANWUNMI IFEOLUWA';
+        const studentId = loggedInStudentData.id || loggedInStudentData.student_id || 'HOPS/ST/041';
+        const className = loggedInStudentData.className || loggedInStudentData.class_name || 'Senior Secondary';
+
+        document.getElementById('studentNameDisplay').textContent = studentName;
+        document.getElementById('modalStudentName').textContent = studentName;
+        document.getElementById('modalStudentId').textContent = studentId;
+        document.getElementById('modalStudentClass').textContent = className;
+        document.getElementById('userInitialDisplay').textContent = studentName.trim().charAt(0).toUpperCase();
+
+        renderEnrolledSubjectsTable();
+        await loadStudentGradesFromAPI();
+    });
+
+    function getStudentEnrolledCodes() {
+        if (loggedInStudentData && Array.isArray(loggedInStudentData.enrolledSubjects)) {
+            return loggedInStudentData.enrolledSubjects;
+        }
+        return ['COD201', 'ICT202', 'MTH201', 'ENG201'];
+    }
+
+    function renderEnrolledSubjectsTable() {
+        const tableBody = document.getElementById('enrolledSubjectsTableBody');
+        const enrolledCodes = getStudentEnrolledCodes();
+        const enrolledObjects = ALL_AVAILABLE_SUBJECTS.filter(s => enrolledCodes.includes(s.code));
+
+        document.getElementById('registeredCountDisplay').textContent = enrolledObjects.length;
+        tableBody.innerHTML = '';
+
+        if (enrolledObjects.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="5" style="text-align: center; color: #888; padding: 20px;">
+                        No subjects registered yet. Click "Register New Subjects" to enroll.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        enrolledObjects.forEach((subj, idx) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${idx + 1}</td>
+                <td><strong>${subj.name}</strong></td>
+                <td><code>${subj.code}</code></td>
+                <td>${subj.dept}</td>
+                <td><span class="grade-badge badge-a">Registered</span></td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    function renderAvailableSubjectsChecklist() {
+        const container = document.getElementById('availableSubjectsContainer');
+        const enrolledCodes = getStudentEnrolledCodes();
+        container.innerHTML = '';
+
+        ALL_AVAILABLE_SUBJECTS.forEach(subj => {
+            const isChecked = enrolledCodes.includes(subj.code) ? 'checked' : '';
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'subject-option';
+            itemDiv.innerHTML = `
+                <label>
+                    <input type="checkbox" name="subjectSelect" value="${subj.code}" ${isChecked}>
+                    <span>${subj.name} (${subj.code})</span>
+                </label>
+                <small style="color: #666;">${subj.dept}</small>
+            `;
+            container.appendChild(itemDiv);
+        });
+    }
+
+    async function handleSubjectRegistration(event) {
+        event.preventDefault();
+        const checkedBoxes = document.querySelectorAll('input[name="subjectSelect"]:checked');
+        const selectedCodes = Array.from(checkedBoxes).map(cb => cb.value);
+
+        loggedInStudentData.enrolledSubjects = selectedCodes;
+        sessionStorage.setItem('currentUser', JSON.stringify(loggedInStudentData));
+        localStorage.setItem('currentUser', JSON.stringify(loggedInStudentData));
+
+        try {
+            await fetch('/api/register-subjects', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    studentId: loggedInStudentData.id || loggedInStudentData.student_id,
+                    subjects: selectedCodes
+                })
+            });
+        } catch (err) {
+            console.warn('Backend API connection offline, updated locally.');
+        }
+
+        renderEnrolledSubjectsTable();
+        closeEnrollmentModal();
+        alert('Subject registration updated successfully!');
+    }
+
+    async function loadStudentGradesFromAPI() {
+        const tableBody = document.getElementById('studentGradesTableBody');
+        const studentId = loggedInStudentData ? (loggedInStudentData.id || loggedInStudentData.student_id) : 'HOPS/ST/041';
+
+        try {
+            let response = await fetch(`/api/student-grades?studentId=${encodeURIComponent(studentId)}`);
+            let gradesData = [];
+
+            if (response.ok) {
+                const resJson = await response.json();
+                if (resJson.success && Array.isArray(resJson.grades)) {
+                    gradesData = resJson.grades;
+                }
+            }
+
+            if (gradesData.length === 0) {
+                gradesData = [
+                    { subject: 'Coding & Web Development', ca1: 14, ca2: 15, exam: 65, total: 94, grade: 'A' },
+                    { subject: 'Computer Science', ca1: 13, ca2: 12, exam: 58, total: 83, grade: 'A' },
+                    { subject: 'Mathematics', ca1: 12, ca2: 11, exam: 52, total: 75, grade: 'A' },
+                    { subject: 'English Language', ca1: 11, ca2: 13, exam: 54, total: 78, grade: 'A' }
+                ];
+            }
+
+            renderGradesTable(gradesData);
+        } catch (error) {
+            console.error('Error fetching grades from database:', error);
+            renderGradesTable([
+                { subject: 'Coding & Web Development', ca1: 14, ca2: 15, exam: 65, total: 94, grade: 'A' },
+                { subject: 'Computer Science', ca1: 13, ca2: 12, exam: 58, total: 83, grade: 'A' },
+                { subject: 'Mathematics', ca1: 12, ca2: 11, exam: 52, total: 75, grade: 'A' },
+                { subject: 'English Language', ca1: 11, ca2: 13, exam: 54, total: 78, grade: 'A' }
+            ]);
+        }
+    }
+
+    function renderGradesTable(grades) {
+        const tableBody = document.getElementById('studentGradesTableBody');
+        tableBody.innerHTML = '';
+
+        if (!grades || grades.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="7" style="text-align: center; color: #888; padding: 20px;">
+                        No uploaded scores recorded for this student yet.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        grades.forEach((item, index) => {
+            const row = document.createElement('tr');
+            const total = item.total !== undefined ? item.total : ((item.ca1 || 0) + (item.ca2 || 0) + (item.exam || 0));
+            const grade = item.grade || (total >= 70 ? 'A' : total >= 60 ? 'B' : total >= 50 ? 'C' : 'F');
+
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td><strong>${item.subject || item.subject_name}</strong></td>
+                <td>${item.ca1 !== undefined ? item.ca1 : 0}</td>
+                <td>${item.ca2 !== undefined ? item.ca2 : 0}</td>
+                <td>${item.exam !== undefined ? item.exam : 0}</td>
+                <td style="font-weight: bold; color: #1a237e;">${total}</td>
+                <td><span class="grade-badge ${getBadgeClass(grade)}">${grade}</span></td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    document.addEventListener('click', () => {
+        const dropdown = document.getElementById('profileDropdown');
+        if (dropdown && dropdown.classList.contains('show')) {
+            dropdown.classList.remove('show');
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Records | HOPS Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        .records-card {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-top: 20px;
+        }
+
+        .filter-toolbar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-bar {
+            flex: 2;
+            min-width: 200px;
+            padding: 10px 14px;
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-bar:focus, .filter-select:focus {
+            border-color: #1a237e;
+            box-shadow: 0 0 0 2px rgba(26, 35, 126, 0.1);
+        }
+
+        .filter-select {
+            flex: 1;
+            min-width: 140px;
+            padding: 10px 14px;
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #ffffff;
+            outline: none;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #eef2f5;
+            font-size: 14px;
+        }
+
+        .data-table th {
+            background-color: #f8f9fa;
+            color: #1a237e;
+            font-weight: 700;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #fcfdfe;
+        }
+
+        .badge-active {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        .badge-inactive {
+            background: #ffebee;
+            color: #c62828;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        .btn-view {
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid #1a237e;
+            background: transparent;
+            color: #1a237e;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-view:hover {
+            background: #1a237e;
+            color: #ffffff;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            width: 90%;
+            max-width: 480px;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eef2f5;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: #1a237e;
+            font-size: 18px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed #f0f0f0;
+            font-size: 14px;
+        }
+
+        .detail-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .detail-val {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 24px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+
+<div class="dashboard-wrapper">
+    <aside class="dash-sidebar">
+        <div class="dash-logo">HOPS Staff</div>
+        <nav>
+            <a href="staff-dashboard.html">📊 <span>Overview</span></a>
+            <a href="student-records.html" class="active">👨‍🎓 <span>Student Records</span></a>
+            <a href="grading-sheet.html">📝 <span>Grading System</span></a>
+            <a href="lesson-planner.html">📅 <span>Lesson Planner</span></a>
+            <a href="parent-messages.html">💬 <span>Parent Messages</span></a>
+            <a href="javascript:void(0)" class="logout" onclick="performLogout()">🚪 <span>Logout</span></a>
+        </nav>
+    </aside>
+
+    <main class="dash-main">
+        <header class="dash-header">
+            <div class="header-text">
+                <h2>Student Records 👨‍🎓</h2>
+                <p>View student profiles, administrative details, and academic class lists.</p>
+            </div>
+        </header>
+
+        <section class="records-card">
+            <div class="filter-toolbar">
+                <input type="text" id="recordSearch" class="search-bar" placeholder="🔍 Search student name or ID..." onkeyup="filterRecords()">
+                
+                <select id="classFilter" class="filter-select" onchange="fetchStudentsByClass()">
+                    <option value="JSS 1">JSS 1</option>
+                    <option value="JSS 2">JSS 2</option>
+                    <option value="JSS 3">JSS 3</option>
+                    <option value="SS 1">SS 1</option>
+                    <option value="SS 2">SS 2</option>
+                    <option value="SS 3">SS 3</option>
+                </select>
+
+                <select id="statusFilter" class="filter-select" onchange="filterRecords()">
+                    <option value="">All Statuses</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
+
+            <div class="table-responsive">
+                <table class="data-table" id="recordsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Student Name</th>
+                            <th>Class</th>
+                            <th>Gender</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentRecordsBody">
+                        <!-- Dynamic content populated via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+<div class="modal-overlay" id="studentModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="mName">Student Profile</h3>
+            <button class="close-btn" onclick="closeStudentModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="detail-row">
+                <span class="detail-label">Student ID:</span>
+                <span class="detail-val" id="mId">-</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Current Class:</span>
+                <span class="detail-val" id="mClass">-</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Gender:</span>
+                <span class="detail-val" id="mGender">-</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Parent/Guardian:</span>
+                <span class="detail-val" id="mGuardian">-</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Contact Number:</span>
+                <span class="detail-val" id="mContact">-</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Attendance Rate:</span>
+                <span class="detail-val" id="mAttendance" style="color: #2e7d32;">100%</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+    let fetchedStudents = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchStudentsByClass();
+    });
+
+    function performLogout() {
+        sessionStorage.removeItem('currentUser');
+        localStorage.removeItem('currentUser');
+        window.location.href = 'portal.html';
+    }
+
+    async function fetchStudentsByClass() {
+        const selectedClass = document.getElementById('classFilter').value;
+        const tbody = document.getElementById('studentRecordsBody');
+
+        tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Loading students...</td></tr>';
+
+        try {
+            const response = await fetch(`/api/students-by-class?class=${encodeURIComponent(selectedClass)}`);
+            const data = await response.json();
+
+            if (data.success && data.students.length > 0) {
+                fetchedStudents = data.students;
+                renderStudentTable(fetchedStudents);
+            } else {
+                fetchedStudents = [];
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No student records found for this class.</td></tr>';
+            }
+        } catch (error) {
+            console.error('Error fetching student records:', error);
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-state" style="color: #c62828;">Failed to load records from server.</td></tr>';
+        }
+    }
+
+    function renderStudentTable(students) {
+        const tbody = document.getElementById('studentRecordsBody');
+        tbody.innerHTML = '';
+
+        if (students.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No matching records found.</td></tr>';
+            return;
+        }
+
+        students.forEach(student => {
+            const tr = document.createElement('tr');
+            tr.setAttribute('data-class', student.current_class || '');
+            tr.setAttribute('data-status', 'Active');
+
+            const id = student.student_id || 'N/A';
+            const name = student.full_name || 'N/A';
+            const currentClass = student.current_class || 'N/A';
+            const gender = student.gender || 'N/A';
+            const guardian = student.parent_guardian || 'N/A';
+            const contact = student.contact_number || 'N/A';
+
+            const escapedName = name.replace(/'/g, "\\'");
+            const escapedClass = currentClass.replace(/'/g, "\\'");
+            const escapedGender = gender.replace(/'/g, "\\'");
+            const escapedGuardian = guardian.replace(/'/g, "\\'");
+            const escapedContact = contact.replace(/'/g, "\\'");
+
+            tr.innerHTML = `
+                <td>${id}</td>
+                <td><strong>${name}</strong></td>
+                <td>${currentClass}</td>
+                <td>${gender}</td>
+                <td><span class="badge-active">Active</span></td>
+                <td>
+                    <button class="btn-view" onclick="openStudentModal('${escapedName}', '${id}', '${escapedClass}', '${escapedGender}', '${escapedGuardian}', '${escapedContact}', '100%')">View Profile</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function filterRecords() {
+        const query = document.getElementById('recordSearch').value.toLowerCase().trim();
+        const selectedStatus = document.getElementById('statusFilter').value.toLowerCase();
+
+        const filtered = fetchedStudents.filter(student => {
+            const matchesSearch = (student.full_name && student.full_name.toLowerCase().includes(query)) ||
+                                  (student.student_id && student.student_id.toLowerCase().includes(query));
+            const matchesStatus = !selectedStatus || selectedStatus === 'active';
+            return matchesSearch && matchesStatus;
+        });
+
+        renderStudentTable(filtered);
+    }
+
+    function openStudentModal(name, id, className, gender, guardian, contact, attendance) {
+        document.getElementById('mName').textContent = name;
+        document.getElementById('mId').textContent = id;
+        document.getElementById('mClass').textContent = className;
+        document.getElementById('mGender').textContent = gender;
+        document.getElementById('mGuardian').textContent = guardian;
+        document.getElementById('mContact').textContent = contact;
+        document.getElementById('mAttendance').textContent = attendance;
+
+        document.getElementById('studentModal').classList.add('active');
+    }
+
+    function closeStudentModal() {
+        document.getElementById('studentModal').classList.remove('active');
+    }
+
+    document.getElementById('studentModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeStudentModal();
+        }
+    });
+</script>
+
+</body>
+</html>

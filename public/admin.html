@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Login | Heirs of Promise Schools</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="portal.css">
+    <style>
+        .admin-login-box {
+            border-top: 5px solid #d9534f;
+        }
+        .admin-badge {
+            background-color: #d9534f;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body class="portal-body">
+
+<div class="login-container">
+    <div class="login-box admin-login-box">
+        <div class="login-header">
+            <span class="admin-badge">ADMIN CONTROL PANEL</span>
+            <h2>Administrator Portal</h2>
+            <p>Authorized Personnel Only</p>
+        </div>
+        
+        <form id="adminLoginForm" class="portal-form" onsubmit="handleAdminLogin(event)">
+            <div class="input-group">
+                <input type="text" id="adminId" placeholder=" " required value="HOPS/AD/001">
+                <label for="adminId">Admin ID</label>
+            </div>
+            
+            <div class="input-group">
+                <input type="password" id="adminPassword" placeholder=" " required>
+                <label for="adminPassword">Password</label>
+            </div>
+            
+            <button type="submit" class="login-btn" id="submitBtn" style="background-color: #d9534f;">Login as Admin</button>
+        </form>
+        
+        <div class="login-footer">
+            <button onclick="window.location.href='index.html'" class="back-home-btn">← Return to Main Site</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function handleAdminLogin(event) {
+        event.preventDefault();
+        
+        const submitBtn = document.getElementById('submitBtn');
+        const adminId = document.getElementById('adminId').value;
+        const password = document.getElementById('password') ? document.getElementById('password').value : document.getElementById('adminPassword').value;
+
+        submitBtn.innerText = "Authenticating...";
+        submitBtn.style.opacity = "0.7";
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    idNumber: adminId,
+                    password: password,
+                    role: 'admin'
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                sessionStorage.setItem('currentAdmin', JSON.stringify(result.user));
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                alert(result.message || 'Login failed. Invalid administrator credentials.');
+                submitBtn.innerText = "Login as Admin";
+                submitBtn.style.opacity = "1";
+                submitBtn.disabled = false;
+            }
+        } catch (error) {
+            alert('Unable to connect to the server.');
+            submitBtn.innerText = "Login as Admin";
+            submitBtn.style.opacity = "1";
+            submitBtn.disabled = false;
+        }
+    }
+</script>
+
+</body>
+</html>

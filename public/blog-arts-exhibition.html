@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural & Arts Exhibition | Heirs of Promise Schools</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="blog.css"> 
+</head>
+<body>
+
+<header class="header">
+    <div class="left">
+        <div class="hamburger" id="menuIcon" onclick="toggleMenu()">☰</div>
+        <div class="logo">HOPS Blog</div>
+    </div>
+    <div class="right">
+        <div class="signup" onclick="window.location.href='index.html'">Back to Home</div>
+    </div>
+</header>
+
+<nav id="sideMenu" class="side-menu">
+    <ul>
+        <li><a href="index.html">🏠 Home</a></li>
+        <li><a href="academics.html">📁 Academics</a></li>
+        <li><a href="admissions.html">📁 Admissions</a></li>
+        <li><a href="subscriptions.html">📺 Subscriptions</a></li>
+        <li><a href="library.html">📁 Library</a></li>
+        <li><a href="about.html">📁 About</a></li>
+        <li><a href="contact.html">📁 Contact</a></li>
+        <li><a href="portal.html" class="portal-btn">🚀 Portal</a></li>
+    </ul>
+</nav>
+
+<div id="overlay" class="overlay"></div>
+
+<div class="blog-layout-container">
+    <main class="blog-main-content">
+        <article class="post-container">
+            <div class="post-header">
+                <span class="category-tag">Arts & Culture</span>
+                <h1>Exhibiting Creativity: Highlights from Our Cultural and Arts Exhibition Day</h1>
+                <p class="post-meta">Published on March 8, 2026 • By Department of Creative & Fine Arts • 4 min read</p>
+                <img src="images/arts_exhibition.jpg" alt="Student Arts Exhibition" class="featured-image">
+            </div>
+
+            <div class="post-content">
+                <p class="lead-paragraph">
+                    Creativity, cultural appreciation, and artistic talent came to life at the Heirs of Promise Schools annual Arts and Cultural Exhibition. The event showcased the diverse creative capabilities of our students through visual arts, craft design, traditional performances, and cultural heritage displays.
+                </p>
+
+                <p>
+                    The exhibition highlighted how creative expression complements academic development by encouraging critical thinking, imagination, and self-confidence across all age groups.
+                </p>
+
+                <h3>1. Fine Art Gallery & Creative Crafts</h3>
+                <p>
+                    The main hall was transformed into a vibrant gallery featuring student artwork, including oil paintings, pencil sketches, sculpture models, and recycled craft projects. Each piece reflected individual originality and technical skill taught during fine arts classes throughout the term.
+                </p>
+
+                <blockquote>
+                    "Art allows young minds to express complex perspectives, appreciate diverse heritage, and transform creative vision into tangible beauty."
+                </blockquote>
+
+                <h3>2. Cultural Performances & Heritage Showcase</h3>
+                <p>
+                    Students represented various cultural traditions through choreographed music, traditional dance, drama presentations, and poetry recitations. Parents and guests experienced a rich celebration of unity, artistic expression, and cultural pride.
+                </p>
+
+                <h3>3. Nurturing Holistic Talent</h3>
+                <p>
+                    We remain committed to offering a well-balanced educational framework where artistic expression thrives alongside STEM education and academic rigor.
+                </p>
+
+                <div class="post-tags">
+                    <span>#HOPSArts</span> <span>#CulturalExhibition</span> <span>#CreativeYouth</span> <span>#HolisticEducation</span>
+                </div>
+            </div>
+
+            <section class="comment-section">
+                <h3 class="comment-count">0 Comments</h3>
+                
+                <div class="comment-input-wrapper">
+                    <form class="comment-form" id="mainCommentForm">
+                        <input type="text" id="userName" placeholder="Your Name" required class="comment-name-input">
+                        
+                        <div id="hiddenFields" class="hidden-comment-fields">
+                            <textarea id="userComment" placeholder="Add a comment..." rows="1" required class="comment-text-input"></textarea>
+                            <div class="form-actions">
+                                <button type="button" class="cancel-btn" onclick="collapseForm()">Cancel</button>
+                                <button type="submit" class="submit-comment">Comment</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="comments-display">
+                    <!-- Comments render here dynamically -->
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <aside class="blog-sidebar">
+        <h3>Upcoming & Related</h3>
+        <div class="side-card" onclick="window.location.href='blog-science-practicals.html'">
+            <img src="images/science_practicals.jpg" alt="Science Practicals">
+            <div class="side-card-info">
+                <h4>Hands-On Science Labs</h4>
+                <p>STEM • Read Now</p>
+            </div>
+        </div>
+        <div class="side-card" onclick="window.location.href='blog-student-spotlight.html'">
+            <img src="images/student_spotlight.jpg" alt="Student Spotlight">
+            <div class="side-card-info">
+                <h4>Student of the Month</h4>
+                <p>Spotlight • Read Now</p>
+            </div>
+        </div>
+        <div class="side-card" onclick="window.location.href='blog-interhouse-sports.html'">
+            <img src="images/interhouse_sports_highlights.jpg" alt="Sports Highlights">
+            <div class="side-card-info">
+                <h4>Inter-House Sports Highlights</h4>
+                <p>Events • Read Now</p>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2026 Heirs of Promise Schools. All Rights Reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

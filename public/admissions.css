@@ -1,0 +1,259 @@
+/* --- Global Variables (Inherited from Design System) --- */
+:root {
+    --navy-deep: #0f172a;
+    --navy-border: #e2e8f0;
+    --cobalt: #2563eb;
+    --cobalt-soft: #eff6ff;
+    --white: #ffffff;
+    --text-body: #475569;
+    --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* --- NAVIGATION & HEADER (STRICT ALIGNMENT) --- */
+.header {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 0 5% 0 0; /* Strict 0 left padding for hamburger edge alignment */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 2500;
+    border-bottom: 1px solid var(--navy-border);
+    height: 80px;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 5px; /* Tiny nudge from the bezel */
+}
+
+.hamburger {
+    font-size: 32px;
+    cursor: pointer;
+    color: var(--navy-deep);
+    width: 50px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    user-select: none;
+}
+
+.hamburger:hover {
+    background: var(--cobalt-soft);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--navy-deep);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+}
+
+/* --- ADMISSIONS HERO --- */
+.admissions-hero {
+    background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), 
+                url('images/school-hall.jpg') center/cover;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    text-align: center;
+    padding: 20px;
+}
+
+.admissions-hero h1 { 
+    font-size: 3.5rem; 
+    margin-bottom: 10px; 
+    letter-spacing: -1.5px;
+    font-weight: 800;
+}
+
+.admissions-hero p { 
+    font-size: 1.25rem; 
+    opacity: 0.9; 
+    max-width: 700px;
+}
+
+/* --- ADMISSIONS CONTAINER --- */
+.admissions-container {
+    max-width: 1100px;
+    margin: 80px auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    text-align: center;
+    color: var(--navy-deep);
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    font-weight: 800;
+}
+
+/* --- PROCESS GRID --- */
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 40px;
+    margin-bottom: 100px;
+}
+
+.process-step {
+    text-align: center;
+    padding: 30px 20px;
+    background: var(--white);
+    border-radius: 24px;
+    border: 1px solid var(--navy-border);
+    transition: var(--transition);
+}
+
+.process-step:hover {
+    transform: translateY(-10px);
+    border-color: var(--cobalt);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+
+.step-circle {
+    width: 65px;
+    height: 65px;
+    background: var(--cobalt);
+    color: var(--white);
+    font-size: 1.6rem;
+    font-weight: 800;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin: 0 auto 25px;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
+.process-step h4 {
+    color: var(--navy-deep);
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.process-step p {
+    color: var(--text-body);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* --- REQUIREMENTS BOX --- */
+.requirements-box {
+    background: var(--cobalt-soft);
+    padding: 50px;
+    border-radius: 30px;
+    margin-bottom: 100px;
+    border: 1px solid rgba(37, 99, 235, 0.1);
+}
+
+.requirements-box h3 { 
+    color: var(--navy-deep); 
+    margin-bottom: 12px; 
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.requirements-box p { 
+    color: var(--text-body); 
+    margin-bottom: 35px; 
+    font-size: 1.1rem;
+}
+
+.dash-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.dash-table tr {
+    border-bottom: 1px dashed #cbd5e1;
+}
+
+.dash-table tr:last-child { border-bottom: none; }
+
+.dash-table td {
+    padding: 20px 15px;
+    font-size: 1.05rem;
+}
+
+.dash-table td:first-child {
+    font-weight: 700;
+    color: var(--navy-deep);
+    width: 40%;
+}
+
+.dash-table td:last-child {
+    color: var(--text-body);
+}
+
+/* --- ADMISSION CTA --- */
+.admission-cta {
+    background: var(--navy-deep);
+    color: var(--white);
+    padding: 80px 40px;
+    border-radius: 40px;
+    text-align: center;
+    box-shadow: 0 25px 50px rgba(15, 23, 42, 0.2);
+}
+
+.admission-cta h2 { 
+    font-size: 2.5rem; 
+    margin-bottom: 15px; 
+    font-weight: 800;
+}
+
+.admission-cta p { 
+    margin-bottom: 40px; 
+    opacity: 0.85; 
+    font-size: 1.2rem;
+}
+
+.cta-btn {
+    background: var(--cobalt);
+    color: var(--white);
+    border: none;
+    padding: 18px 45px;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cta-btn:hover {
+    background: var(--white);
+    color: var(--navy-deep);
+    transform: translateY(-3px);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 900px) {
+    .admissions-hero h1 { font-size: 2.8rem; }
+    .requirements-box { padding: 35px 25px; }
+}
+
+@media (max-width: 768px) {
+    .admissions-hero h1 { font-size: 2.4rem; }
+    .admissions-container { margin: 40px auto; }
+    .dash-table td { display: block; width: 100% !important; padding: 8px 0; }
+    .dash-table td:last-child { padding-bottom: 20px; }
+    .dash-table tr { display: block; }
+    .admission-cta h2 { font-size: 2rem; }
+}

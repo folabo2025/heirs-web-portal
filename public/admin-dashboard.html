@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Heirs of Promise Schools</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; }
+        .admin-nav { background-color: #1a252f; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+        .admin-nav h1 { margin: 0; font-size: 20px; }
+        .nav-right { display: flex; align-items: center; gap: 10px; }
+        .home-btn { background-color: #34495e; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; text-decoration: none; font-size: 14px; }
+        .logout-btn { background-color: #e74c3c; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; }
+        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+        .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .card h2 { margin-top: 0; color: #2c3e50; font-size: 18px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        textarea { width: 100%; height: 140px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: monospace; font-size: 14px; }
+        .form-row { display: flex; gap: 15px; margin-top: 15px; align-items: center; }
+        select, button.action-btn { padding: 10px 20px; font-size: 14px; border-radius: 4px; border: 1px solid #ccc; }
+        button.action-btn { background-color: #27ae60; color: white; border: none; cursor: pointer; font-weight: bold; }
+        button.action-btn:hover { background-color: #219150; }
+        .header-actions { float: right; display: flex; gap: 10px; }
+        button.print-btn { background-color: #2980b9; color: white; border: none; cursor: pointer; font-weight: bold; padding: 10px 18px; border-radius: 4px; }
+        button.clear-all-btn { background-color: #c0392b; color: white; border: none; cursor: pointer; font-weight: bold; padding: 10px 18px; border-radius: 4px; }
+        
+        button.delete-btn { background-color: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        button.delete-btn:hover { background-color: #c0392b; }
+        
+        button.report-btn { background-color: #16a085; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; margin-right: 5px; }
+        button.report-btn:hover { background-color: #117864; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f8f9fa; color: #333; }
+        .role-badge { padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+        .role-student { background-color: #e3f2fd; color: #0d47a1; }
+        .role-staff { background-color: #e8f5e9; color: #1b5e20; }
+        .role-parent { background-color: #fff3e0; color: #e65100; }
+        
+        @media print {
+            .no-print { display: none !important; }
+            .card { box-shadow: none; border: none; padding: 0; }
+            body { background: white; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="admin-nav no-print">
+    <h1>🛡️ Admin Dashboard — Credential Management</h1>
+    <div class="nav-right">
+        <span id="adminNameDisplay" style="margin-right: 10px;">Admin</span>
+        <a href="index.html" class="home-btn">🏠 Main Site</a>
+        <button class="logout-btn" onclick="logoutAdmin()">Logout</button>
+    </div>
+</div>
+
+<div class="container">
+    <!-- BULK GENERATION CARD -->
+    <div class="card no-print">
+        <h2>⚡ Bulk Credential Generator</h2>
+        <p style="color: #666; font-size: 14px;">
+            Paste entries below (one entry per line). Format students as <strong>Name, Class</strong> (e.g. <code>John Doe, JSS 1</code> or <code>Mary Johnson, SS 2</code>).
+        </p>
+        
+        <textarea id="nameListInput" placeholder="John Doe, JSS 1&#10;Mary Johnson, SS 2&#10;Alexander Smith, JSS 3"></textarea>
+        
+        <div class="form-row">
+            <label><strong>Role:</strong></label>
+            <select id="userRoleSelect">
+                <option value="student">Student</option>
+                <option value="staff">Staff Member</option>
+                <option value="parent">Parent</option>
+            </select>
+            
+            <button class="action-btn" onclick="generateCredentials()">Generate & Save Credentials</button>
+        </div>
+    </div>
+
+    <!-- REGISTERED USERS ROSTER -->
+    <div class="card">
+        <div class="header-actions no-print">
+            <button class="print-btn" onclick="window.print()">🖨️ Print Credential Sheet</button>
+            <button class="clear-all-btn" onclick="clearAllUsers()">🗑️ Clear All Credentials</button>
+        </div>
+        <h2>📋 All Issued Credentials</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Full Name</th>
+                    <th>Class</th>
+                    <th>Temporary Password</th>
+                    <th>Role</th>
+                    <th class="no-print">Action</th>
+                </tr>
+            </thead>
+            <tbody id="userRosterTable">
+                <tr>
+                    <td colspan="6" style="text-align: center; color: #888;">Loading user database...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const currentAdmin = JSON.parse(sessionStorage.getItem('currentAdmin'));
+    if (!currentAdmin) {
+        window.location.href = 'admin.html';
+    } else {
+        document.getElementById('adminNameDisplay').innerText = currentAdmin.name;
+    }
+
+    fetchUsers();
+
+    async function fetchUsers() {
+        try {
+            const response = await fetch('/api/admin/all-users');
+            const data = await response.json();
+
+            if (data.success) {
+                renderTable(data.users);
+            }
+        } catch (err) {
+            console.error('Failed to load user list', err);
+        }
+    }
+
+    function renderTable(users) {
+        const tbody = document.getElementById('userRosterTable');
+        if (users.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No credentials generated yet.</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = users.map(u => `
+            <tr>
+                <td><strong>${u.id}</strong></td>
+                <td>${u.name}</td>
+                <td><strong>${u.class || 'N/A'}</strong></td>
+                <td><code style="background: #eee; padding: 2px 6px; border-radius: 3px;">${u.password}</code></td>
+                <td><span class="role-badge role-${u.role}">${u.role.toUpperCase()}</span></td>
+                <td class="no-print">
+                    ${u.role === 'student' ? `<button class="report-btn" onclick="openReportCard('${u.id}')">📄 Print Report</button>` : ''}
+                    ${u.role !== 'admin' ? `<button class="delete-btn" onclick="deleteUser('${u.id}')">Delete</button>` : '<span style="color:#aaa; font-size:12px;">Protected</span>'}
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function openReportCard(studentId) {
+        window.open(`report-card.html?studentId=${encodeURIComponent(studentId)}`, '_blank');
+    }
+
+    // Helper: Normalize Class Names strictly to JSS 1 - SS 3
+    function normalizeClassName(inputClass) {
+        if (!inputClass) return 'JSS 1';
+        const cleanStr = inputClass.trim().toUpperCase();
+
+        if (cleanStr.startsWith('JSS 1') || cleanStr.startsWith('JSS1')) return 'JSS 1';
+        if (cleanStr.startsWith('JSS 2') || cleanStr.startsWith('JSS2')) return 'JSS 2';
+        if (cleanStr.startsWith('JSS 3') || cleanStr.startsWith('JSS3')) return 'JSS 3';
+        if (cleanStr.startsWith('SS 1') || cleanStr.startsWith('SS1') || cleanStr.startsWith('SSS 1') || cleanStr.startsWith('SSS1')) return 'SS 1';
+        if (cleanStr.startsWith('SS 2') || cleanStr.startsWith('SS2') || cleanStr.startsWith('SSS 2') || cleanStr.startsWith('SSS2')) return 'SS 2';
+        if (cleanStr.startsWith('SS 3') || cleanStr.startsWith('SS3') || cleanStr.startsWith('SSS 3') || cleanStr.startsWith('SSS3')) return 'SS 3';
+
+        return 'JSS 1';
+    }
+
+    async function generateCredentials() {
+        const rawText = document.getElementById('nameListInput').value.trim();
+        const role = document.getElementById('userRoleSelect').value;
+
+        if (!rawText) {
+            alert('Please enter at least one entry.');
+            return;
+        }
+
+        const lines = rawText.split('\n').map(n => n.trim()).filter(n => n.length > 0);
+        
+        const entries = lines.map(line => {
+            let name = line;
+            let rawClass = 'JSS 1';
+
+            if (line.includes(',')) {
+                const parts = line.split(',');
+                name = parts[0];
+                rawClass = parts[1] || rawClass;
+            } else if (line.includes('|')) {
+                const parts = line.split('|');
+                name = parts[0];
+                rawClass = parts[1] || rawClass;
+            }
+
+            return {
+                name: name.trim(),
+                className: normalizeClassName(rawClass)
+            };
+        });
+
+        try {
+            const response = await fetch('/api/admin/generate-credentials', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ entries, role })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert(result.message);
+                document.getElementById('nameListInput').value = '';
+                fetchUsers();
+            } else {
+                alert('Error: ' + result.message);
+            }
+        } catch (err) {
+            alert('Server error generating credentials.');
+        }
+    }
+
+    async function deleteUser(userId) {
+        if (!confirm(`Are you sure you want to delete user ${userId}?`)) return;
+
+        try {
+            const response = await fetch(`/api/admin/delete-user/${encodeURIComponent(userId)}`, {
+                method: 'DELETE'
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                fetchUsers();
+            } else {
+                alert('Error: ' + result.message);
+            }
+        } catch (err) {
+            alert('Failed to delete user.');
+        }
+    }
+
+    async function clearAllUsers() {
+        const confirmation = confirm('⚠️ WARNING: Are you sure you want to delete ALL generated student, staff, and parent accounts? This cannot be undone.');
+        if (!confirmation) return;
+
+        try {
+            const response = await fetch('/api/admin/clear-all-users', {
+                method: 'DELETE'
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert(result.message);
+                fetchUsers();
+            } else {
+                alert('Error: ' + result.message);
+            }
+        } catch (err) {
+            alert('Failed to clear user list.');
+        }
+    }
+
+    function logoutAdmin() {
+        sessionStorage.removeItem('currentAdmin');
+        window.location.href = 'admin.html';
+    }
+</script>
+</body>
+</html>

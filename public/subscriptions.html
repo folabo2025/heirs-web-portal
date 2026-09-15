@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments & Subscriptions | Heirs of Promise Schools</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="subscriptions.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="left">
+        <div class="hamburger" id="menuIcon" onclick="toggleMenu()">☰</div>
+        <a href="index.html" class="logo">Heirs of Promise Schools</a>
+    </div>
+    <div class="center">
+        <input type="text" placeholder="Search">
+        <button type="submit">🔍</button>
+    </div>
+    <div class="right">
+        <div class="signup" onclick="window.location.href='apply.html'">Apply Now</div>
+    </div>
+</header>
+
+<nav id="sideMenu" class="side-menu">
+    <ul>
+        <li><a href="index.html">🏠 Home</a></li>
+        <li><a href="academics.html">📁 Academics</a></li>
+        <li><a href="admissions.html">📁 Admissions</a></li>
+        <li><a href="subscriptions.html">📺 Subscriptions</a></li>
+        <li><a href="library.html">📁 Library</a></li>
+        <li><a href="about.html">📁 About</a></li>
+        <li><a href="contact.html">📁 Contact</a></li>
+        <li><a href="portal.html" class="portal-btn">🚀 Portal</a></li>
+    </ul>
+</nav>
+
+<div id="overlay" class="overlay"></div>
+
+<section class="payment-hero">
+    <h1>Online Payments</h1>
+    <p>Securely pay school fees and purchase school items from home.</p>
+</section>
+
+<main class="pay-container">
+    <h2 class="section-title">Academic Fees (Termly)</h2>
+    <div class="fee-grid">
+        <div class="fee-card">
+            <h3>Junior Secondary</h3>
+            <p class="price">₦150,000<span>/term</span></p>
+            <ul>
+                <li>Tuition & Lab Fees</li>
+                <li>Digital Resources</li>
+                <li>Sports & Library</li>
+            </ul>
+            <button class="pay-btn">Pay Fees Now</button>
+        </div>
+        
+        <div class="fee-card featured">
+            <div class="ribbon">Popular</div>
+            <h3>Senior Secondary</h3>
+            <p class="price">₦185,000<span>/term</span></p>
+            <ul>
+                <li>Tuition & Science Lab</li>
+                <li>Exam Prep (WAEC/NECO)</li>
+                <li>Vocational Training</li>
+            </ul>
+            <button class="pay-btn">Pay Fees Now</button>
+        </div>
+    </div>
+
+    <h2 class="section-title" style="margin-top: 80px;">School Store</h2>
+    <div class="store-grid">
+        <div class="store-card">
+            <div class="img-box">
+                <img src="images/uniform-placeholder.jpg" alt="Uniform">
+            </div>
+            <h4>Full School Uniform</h4>
+            <p class="store-price">₦15,500</p>
+            <button class="add-cart">Add to Cart</button>
+        </div>
+        
+        <div class="store-card">
+            <div class="img-box">
+                <img src="images/sportswear-placeholder.jpg" alt="Sportswear">
+            </div>
+            <h4>Sports Wear (House Color)</h4>
+            <p class="store-price">₦8,000</p>
+            <button class="add-cart">Add to Cart</button>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="footer-bottom">
+        <p>&copy; 2026 Heirs of Promise Schools. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
